@@ -35,41 +35,27 @@ public class mainGame {
     // Initialisieren der Spieler (Fehler in Spielererstellung, angebliche Mehrfacherstellung gleicher Spieler.
     // Problem muss noch behoben werden.
     switch(numOfPlayers){
-      case 2:
-        System.out.println("Bitte geben Sie Ihre Namen ein.");
-        Player Player_1 = new Player();
-        Player_1.setPlayerName(1);
-        Player_1.setOffset(1);
-        Player Player_2 = new Player();
-        Player_2.setPlayerName(2);  
-        Player_2.setOffset(2);
-        break;        
-      case 3:
-        System.out.println("Bitte geben Sie Ihre Namen ein.");
-        Player Player_1 = new Player();
-        Player_1.setPlayerName(1);
-        Player_1.setOffset(1);
-        Player Player_2 = new Player();
-        Player_2.setPlayerName(2);
-        Player_2.setOffset(2);
-        Player Player_3 = new Player();
-        Player_3.setPlayerName(3);
-        Player_3.setOffset(3);
-        break;        
+      
       case 4:
-        System.out.println("Bitte geben Sie Ihre Namen ein.");
-        Player Player_1 = new Player();
-        Player_1.setPlayerName(1);
-        Player_1.setOffset(1);        
-        Player Player_2 = new Player();
-        Player_2.setPlayerName(2);
-        Player_2.setOffset(2);
-        Player Player_3 = new Player();
-        Player_3.setPlayerName(3);
-        Player_3.setOffset(3);
+        System.out.println("Spieler 4: Bitte geben Sie Ihre Namen ein.");        
         Player Player_4 = new Player();
         Player_4.setPlayerName(4);
         Player_4.setOffset(4);
+                                                              
+      case 3:
+        System.out.println("Spieler 3: Bitte geben Sie Ihre Namen ein.");  
+        Player Player_3 = new Player();
+        Player_3.setPlayerName(3);
+        Player_3.setOffset(3);
+      case 2:
+        System.out.println("Spieler 2: Bitte geben Sie Ihre Namen ein.");
+        Player Player_2 = new Player();
+        Player_2.setPlayerName(2);  
+        Player_2.setOffset(2);
+        System.out.println("Spieler 1: Bitte geben Sie Ihre Namen ein.");
+        Player Player_1 = new Player();
+        Player_1.setPlayerName(1);  
+        Player_1.setOffset(1);
         break;
       default:
         System.out.println("Spielerinitialisierung fehlgeschlafen. Spiel wird beendet.");
