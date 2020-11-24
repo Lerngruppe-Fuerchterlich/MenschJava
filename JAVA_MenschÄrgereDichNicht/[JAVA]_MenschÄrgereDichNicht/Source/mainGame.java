@@ -24,7 +24,6 @@ public class mainGame {
   // Hauptspielverzeichnis
   public static void main(String[] args) throws IOException{
     // Variables
-
         
     // Abfrage der Spieleranzahl, Festlegung der Spielernamen
     System.out.println("Mensch Ärgere Dich Nicht!");
@@ -37,22 +36,22 @@ public class mainGame {
     switch(numOfPlayers){
       
       case 4:
-        System.out.println("Spieler 4: Bitte geben Sie Ihre Namen ein.");        
+        System.out.print("Spieler 4: Bitte geben Sie Ihre Namen ein: ");        
         Player Player_4 = new Player();
         Player_4.setPlayerName(4);
         Player_4.setOffset(4);
                                                               
       case 3:
-        System.out.println("Spieler 3: Bitte geben Sie Ihre Namen ein.");  
+        System.out.print("Spieler 3: Bitte geben Sie Ihre Namen ein: ");  
         Player Player_3 = new Player();
         Player_3.setPlayerName(3);
         Player_3.setOffset(3);
       case 2:
-        System.out.println("Spieler 2: Bitte geben Sie Ihre Namen ein.");
+        System.out.print("Spieler 2: Bitte geben Sie Ihre Namen ein: ");
         Player Player_2 = new Player();
         Player_2.setPlayerName(2);  
         Player_2.setOffset(2);
-        System.out.println("Spieler 1: Bitte geben Sie Ihre Namen ein.");
+        System.out.print("Spieler 1: Bitte geben Sie Ihre Namen ein: ");
         Player Player_1 = new Player();
         Player_1.setPlayerName(1);  
         Player_1.setOffset(1);
@@ -62,8 +61,9 @@ public class mainGame {
         return;
     }
     
-    System.out.println("Das Spiel beginnt. Viel Erfolg!");
-    
+    System.out.println("Das Spiel beginnt. Viel Erfolg!");     
+    Gamefield gamefield = new Gamefield(numOfPlayers);
+    gamefield.show();
   }
   
   // Abfrage der Spieleranzahl
@@ -73,12 +73,12 @@ public class mainGame {
     boolean bCompare = false;
     bCompare = false;
     
-    System.out.println("Bitte gebe die Anzahl der Spieler ein (2-4 Spieler).");
+    System.out.print("Bitte gebe die Anzahl der Spieler ein (2-4 Spieler): ");
     
     do {
       // Abfrage User-Eingabe
       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      System.out.println("Anzahl Spieler: ");
+      System.out.print("Anzahl Spieler: ");
       strContainer = br.readLine();
       
       // Auswerten User-Eingabe

@@ -30,14 +30,16 @@ public class Gamefield {
   
   // Constructor ------------------------------
      // Default-Constructor
-     Spielfeld(){}
+     Gamefield(int numOfPlayers){
+     
+     };
   
   // Constructor ------------------------------
   
   // Methods ----------------------------------
   
      void show () {
-       
+         System.out.println("huhu");
      }
   
   // Methods ----------------------------------
