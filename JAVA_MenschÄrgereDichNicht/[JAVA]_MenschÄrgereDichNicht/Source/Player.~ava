@@ -16,7 +16,7 @@ public class Player {
   void setPlayerName(int cntPlayer) throws IOException {
     // Abfrage User-Eingabe
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    System.out.print("Spieler " + cntPlayer + ": ");
+    System.out.print("Spieler " + cntPlayer + ":");
     strPlayerName = br.readLine();
   }
   
