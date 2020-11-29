@@ -1,1 +1,6 @@
 /bin/
+*.~ava
+Gamefield.class
+mainGame.class
+Piece.class
+Player.class
