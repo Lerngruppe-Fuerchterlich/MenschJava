@@ -1,16 +1,6 @@
 /*------------------------------------------------------ 
   Program:      Mensch Ärger Dich Nicht
   Class:        mainGame
- -------------------------------------------------------   
-  Author:       ***REMOVED***
-                  E-Mail:     --?
-                  Github:     github.com/JPW21 
-                ***REMOVED***   
-                  E-Mail:     --?
-                  Github:     github.com/Elonil
-                ***REMOVED***  
-                  E-Mail:     ilka.salomon@gmx.de
-                  Github:     github.com/Salomonelle
  -------------------------------------------------------  
   Date:         24.11.2020
 ------------------------------------------------------*/; 
