@@ -1,9 +1,9 @@
 /*------------------------------------------------------ 
-  Program:      Mensch Ärger Dich Nicht
+  Program:      Mensch Ã„rgere Dich Nicht
   Class:        mainGame
  -------------------------------------------------------  
   Date:         24.11.2020
-------------------------------------------------------*/; 
+------------------------------------------------------*/ 
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class mainGame {
     // Variables
     
     // Abfrage der Spieleranzahl, Festlegung der Spielernamen
-    System.out.println("Mensch Ärgere Dich Nicht!");
+    System.out.println("Mensch Ã„rgere Dich Nicht!");
 
     // Abfrage wie viele Spieler am Spiel teilnehmen (2-4 Spieler)
     int numOfPlayers = numOfPlayers();
@@ -25,12 +25,10 @@ public class mainGame {
     // Initialisieren der Spieler (Fehler in Spielererstellung, angebliche Mehrfacherstellung gleicher Spieler.
     // Problem muss noch behoben werden.
     switch(numOfPlayers){
-      
       case 4:      
         Player Player_4 = new Player();
         Player_4.setPlayerName(4);
-        Player_4.setOffset(4);
-                                                              
+        Player_4.setOffset(4);                                               
       case 3:
         Player Player_3 = new Player();
         Player_3.setPlayerName(3);
@@ -83,5 +81,3 @@ public class mainGame {
     return numPlayers;
   }
 }
-
-

@@ -1,9 +1,9 @@
 /*------------------------------------------------------ 
-  Program:      Mensch Ärger Dich Nicht
+  Program:      Mensch Ã„rgere Dich Nicht
   Class:        Gamefield
  -------------------------------------------------------  
   Date:         24.11.2020
-------------------------------------------------------*/; 
+------------------------------------------------------*/
 import org.fusesource.jansi.AnsiConsole;
 import static org.fusesource.jansi.Ansi.*;
 import static org.fusesource.jansi.Ansi.Color.*;
