@@ -1,3 +1,10 @@
+/*------------------------------------------------------ 
+  Program:      Mensch Ärgere Dich Nicht
+  Class:        mainGame
+ -------------------------------------------------------  
+  Date:         24.11.2020
+------------------------------------------------------*/ 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,6 +17,7 @@ public class Player {
   
   // Constuctor
   Player(){
+    Piece piece = new Piece();
   }
   
   // Setze Spielernamen
@@ -35,7 +43,7 @@ public class Player {
     return offset;
   }
   
-  // W�rfeln
+  // Würfeln
   int roll_dice() {
     Random rnd = new Random();
     int cntEyes = rnd.nextInt(5);   // Zufallszahl zwischen 0 und 5 -> 6 Werte

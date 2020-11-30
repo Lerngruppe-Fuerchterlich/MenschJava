@@ -5,51 +5,114 @@
   Date:         24.11.2020
 ------------------------------------------------------*/ 
 
+// Imports
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-
+// Hauptspielverzeichnis
 public class mainGame {
 
-  // Hauptspielverzeichnis
   public static void main(String[] args) throws IOException{
     // Variables
-    
+
+    //Clear Terminal
+    clrTerminal();
+
     // Abfrage der Spieleranzahl, Festlegung der Spielernamen
     System.out.println("Mensch Ärgere Dich Nicht!");
 
     // Abfrage wie viele Spieler am Spiel teilnehmen (2-4 Spieler)
     int numOfPlayers = numOfPlayers();
+    Player Player_1 = null;
+    Player Player_2 = null;
+    Player Player_3 = null;
+    Player Player_4 = null;
     
-    // Initialisieren der Spieler (Fehler in Spielererstellung, angebliche Mehrfacherstellung gleicher Spieler.
-    // Problem muss noch behoben werden.
-    switch(numOfPlayers){
-      case 4:      
-        Player Player_4 = new Player();
-        Player_4.setPlayerName(4);
-        Player_4.setOffset(4);                                               
-      case 3:
-        Player Player_3 = new Player();
-        Player_3.setPlayerName(3);
-        Player_3.setOffset(3);
-      case 2:
-        Player Player_2 = new Player();
-        Player_2.setPlayerName(2);  
-        Player_2.setOffset(2);
-        Player Player_1 = new Player();
+    // Initialisieren der Spieler
+    if (numOfPlayers <= 4 && numOfPlayers >= 2){
+      if (numOfPlayers >= 2){
+        Player_1 = new Player();
         Player_1.setPlayerName(1);  
         Player_1.setOffset(1);
-        break;
-      default:
-        System.out.println("Spielerinitialisierung fehlgeschlafen. Spiel wird beendet.");
-        return;
+
+        Player_2 = new Player();
+        Player_2.setPlayerName(2);  
+        Player_2.setOffset(2);
+      }
+      if (numOfPlayers >= 3){
+        Player_3 = new Player();
+        Player_3.setPlayerName(3);
+        Player_3.setOffset(3);
+      }
+      if(numOfPlayers == 4){
+        Player_4 = new Player();
+        Player_4.setPlayerName(4);
+        Player_4.setOffset(4);
+      }
     }
-    
+    // Wenn Initialisierung fehltschlägt, beende Spiel und gib Fehlermeldung aus.
+    else{      
+      System.out.println("Spielerinitialisierung fehlgeschlafen. Spiel wird beendet.");
+      //return;
+    }
+
     System.out.println("Das Spiel beginnt. Viel Erfolg!");     
     Gamefield gamefield = new Gamefield(numOfPlayers);
     gamefield.show(1,2,3,4);
-    
+
+    // Initiiere Spielvariablen
+    boolean gameFinished = false;     // Bool'sche Variable zur Überprüfung, ob das Spiel beendet ist
+    int curPlayer = 0;                // Spielerlaufvariable
+    int oldPlayer;                    // Alter Spieler
+    String curPlayerName;             // Spielername
+    String strContainer = "";         // String Container (Dynamische Benutzereingabe)
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));   // String Input Reader
+    boolean gameRoutineStart = false; // Spielroutine, initialer Start
+
+    // Starte Spielroutine
+    do{
+      // Spielroutine, initialer Start + Wahl nächster Spieler
+      if (gameRoutineStart == false){
+        curPlayer = 1;
+        gameRoutineStart = true;
+      }
+      else{
+        oldPlayer = curPlayer;
+        if(oldPlayer == numOfPlayers){
+          curPlayer = 1;
+        }
+        else{
+          curPlayer = oldPlayer + 1;
+        }
+      }
+
+      // Spieler ist am Zug
+      switch(curPlayer){
+        case 1:{
+          curPlayerName = Player_1.getPlayerName();
+          break;
+        }
+        case 2:{
+          curPlayerName = Player_2.getPlayerName();
+          break;
+        }
+        case 3:{          
+          curPlayerName = Player_3.getPlayerName();
+          break;
+        }
+        case 4:{
+          curPlayerName = Player_4.getPlayerName();
+          break;
+        }
+        default:{
+          System.out.println("Es ist ein unerwarteter Fehler aufgetreten. Das Spiel wird beendet.\n\nDrücken Sie eine beliebige Taste...");
+          br.readLine();
+          return;
+        }
+      }
+
+    }while (gameFinished != true);
   }
   
   // Abfrage der Spieleranzahl
@@ -79,5 +142,15 @@ public class mainGame {
     }while(bCompare != true);
     
     return numPlayers;
+  }
+
+  // Methode zur Bereinigung der Console
+  public static void clrTerminal(){
+    try{
+      new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+    }
+    catch(Exception e){
+      System.out.println(e);
+    }
   }
 }
