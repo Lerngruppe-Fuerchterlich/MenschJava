@@ -11,18 +11,16 @@ import static org.fusesource.jansi.Ansi.Color.*;
 public class Gamefield {
   // Attributes -------------------------------
   // -> own
-     
     // Others
-    static int i = 0; 
+    static int i = 0;                         // Counter 
+    Color[] GamefieldArray = new Color[40];   // Gamefield position array
   
-    // Gamefield Settings
-    GamefieldPrinter print = new GamefieldPrinter();
-    Color[] GamefieldArray = new Color[40];
-  
-    // Player Settings 
-    static int numberOfPlayers = 0;
+    static int numberOfPlayers = 0;           // Absolute number of players
    
-    // -> other classes                                                       
+  // -> other classes  
+                                    
+    GamefieldPrinter print = new GamefieldPrinter();
+                       
     GamefieldPlayerAppearance player_1 = new GamefieldPlayerAppearance    (RED); 
     GamefieldPlayerAppearance player_2 = new GamefieldPlayerAppearance   (BLUE);
     GamefieldPlayerAppearance player_3 = new GamefieldPlayerAppearance (YELLOW); 
@@ -33,9 +31,11 @@ public class Gamefield {
   // Constructor ------------------------------
      // Default-Constructor
      Gamefield(int numOfPlayers){
+    
        AnsiConsole.systemInstall();
        numberOfPlayers = numOfPlayers;
        resetGamefield();
+    
        switch (numberOfPlayers) {
          case 2:
             player_2.deactivate();
@@ -47,12 +47,10 @@ public class Gamefield {
           default:
             break;
        }
-     };
-  
+     }; 
   // Constructor ------------------------------
   
-  // Methods ----------------------------------
-  
+  // Methods ----------------------------------     
      void setPlayerPosition (int numberOfPlayer, int[] positionArray) {
        switch (numberOfPlayer) {
           case 1:  player_1.setPosition(positionArray);
@@ -78,7 +76,8 @@ public class Gamefield {
        }
      void show () { 
       // Reset
-      resetGamefield();                       
+      resetGamefield();       
+      // Place all players on the gamefield, using the positions                
       player_1.placeOnGamefield (GamefieldArray);  
       player_2.placeOnGamefield (GamefieldArray); 
       player_3.placeOnGamefield (GamefieldArray);
@@ -86,8 +85,7 @@ public class Gamefield {
     
       // Start Printing         
       System.out.print("\n ");
-      for (int i = 0; i < 56; i++) {System.out.print(print.border_top);}
-       
+      print.printBorderTop();
       // ----------------------
       print.genericPrint(player_1.start[0],player_1.start[1],BLACK,BLACK,GamefieldArray[8],GamefieldArray[9],GamefieldArray[10],BLACK,BLACK,player_2.start[0],player_2.start[1]);  
       print.emptyline ();
@@ -113,10 +111,10 @@ public class Gamefield {
       // ----------------------  
       print.genericPrint(player_4.start[0],player_4.start[1],BLACK,BLACK,GamefieldArray[31],player_4.target[0],GamefieldArray[27],BLACK,BLACK,player_3.start[0],player_3.start[1]); 
       print.emptyline();        
-      print.genericPrint(player_4.start[2],player_4.start[3],BLACK,BLACK,GamefieldArray[30],GamefieldArray[29],GamefieldArray[28],BLACK,BLACK,player_3.start[2],player_3.start[3]); 
-    
+      print.genericPrint(player_4.start[2],player_4.start[3],BLACK,BLACK,GamefieldArray[30],GamefieldArray[29],GamefieldArray[28],BLACK,BLACK,player_3.start[2],player_3.start[3]);   
       System.out.print("\n ");
-      for (int i = 0; i < 56; i++) {System.out.print(print.border_bottom);} 
+      print.printBorderBottom(); 
+      // uninstall console interface
       AnsiConsole.systemUninstall(); 
      }
        
@@ -132,9 +130,7 @@ public class Gamefield {
         player_3.target[i] = WHITE;
         player_4.target[i] = WHITE;
       }
-      for (int i = 0; i < 40; i++) {
-         GamefieldArray[i] = WHITE;   
-      }
+      for (int i = 0; i < 40; i++) {GamefieldArray[i] = WHITE;}
     }
   
   // Methods ----------------------------------

@@ -1,22 +1,36 @@
+/*------------------------------------------------------ 
+  Program:      Mensch Ärgere Dich Nicht
+  Class:        GamefieldPrinter
+ -------------------------------------------------------  
+  Date:         24.11.2020
+------------------------------------------------------*/
 import        org.fusesource.jansi.AnsiConsole;
 import static org.fusesource.jansi.Ansi.*;
 import static org.fusesource.jansi.Ansi.Color.*;
 
 public class GamefieldPrinter {
-                                
+  // Attributes -------------------------------                             
   Color[] printArray = new Color[11];
   
   String border_right  = " +";  
   String border_left   = " + ";
   String border_top    = "+";
   String border_bottom = "+";
-  
+  // Attributes -------------------------------
+  // Constructor ------------------------------
   GamefieldPrinter (){ /* */ };
-  
+  // Constructor ------------------------------
+  // Methods ----------------------------------
   void setBorderRight  (String appearance) {border_right  = appearance;}
   void setBorderLeft   (String appearance) {border_left   = appearance;}
   void setBorderTop    (String appearance) {border_top    = appearance;}
   void setBorderBottom (String appearance) {border_bottom = appearance;}
+  void printBorderTop () {
+    for (int i = 0; i < 56; i++) {System.out.print(print.border_top);}
+  }
+  void printBorderBottom () {
+    for (int i = 0; i < 56; i++) {System.out.print(print.border_bottom);}
+  }
   
   void genericPrint(Color p1,Color p2,Color p3,Color p4,Color p5,Color p6,Color p7,Color p8,Color p9,Color p10,Color p11) {
          System.out.print("\n" + border_left);
@@ -53,5 +67,5 @@ public class GamefieldPrinter {
      
     void emptyline ()
          {genericPrint(BLACK,BLACK,BLACK,BLACK,BLACK,BLACK,BLACK,BLACK,BLACK,BLACK,BLACK);}        
-  
+  // Methods ----------------------------------
 }

@@ -1,25 +1,30 @@
+/*------------------------------------------------------ 
+  Program:      Mensch Ärgere Dich Nicht
+  Class:        GamefieldPlayerAppearance
+ -------------------------------------------------------  
+  Date:         24.11.2020
+------------------------------------------------------*/
 import org.fusesource.jansi.AnsiConsole;
 import static org.fusesource.jansi.Ansi.*;
 import static org.fusesource.jansi.Ansi.Color.*;
 
 public class GamefieldPlayerAppearance {
-  // Attributes
-  
+  // Attributes -------------------------------  
     int i = 0;
     int[]  position  = new int[] {-1,-1,-1,-1};  
     Color   color    = WHITE;        
     Color[] target   = new Color[] {WHITE,WHITE,WHITE,WHITE}; 
     Color[] start    = new Color[] {WHITE,WHITE,WHITE,WHITE};
-  
-  // Constructor
-  
+  // Attributes -------------------------------
+  // Constructor ------------------------------
     GamefieldPlayerAppearance(Color cl){
       color = cl;
       for (int i = 0; i < 4; i++) {
         start[i] = color;
       }
     };
-  // Methods 
+  // Constructor ------------------------------
+  // Methods ---------------------------------- 
     void setPosition (int [] positionArray) {
       for (i = 0; i < 4 ; i++) {
         // Check if deactivated
@@ -51,5 +56,6 @@ public class GamefieldPlayerAppearance {
           } else start [i] = color;
         }
     }
-}
+  }
+  // Methods ----------------------------------
 }
