@@ -15,7 +15,8 @@ public class mainGame {
 
   public static void main(String[] args) throws IOException{
     // Variables
-
+    int [] testArr1 = new int[] {1,3,5,7}; 
+    int [] testArr2 = new int[] {-1,-1,42,10};
     //Clear Terminal
     clrTerminal();
 
@@ -59,8 +60,12 @@ public class mainGame {
 
     System.out.println("Das Spiel beginnt. Viel Erfolg!");     
     Gamefield gamefield = new Gamefield(numOfPlayers);
+    gamefield.resetGamefield();
     gamefield.show();
-
+    gamefield.setPlayerPosition(1,testArr1);
+    gamefield.setPlayerPosition(2,testArr2);
+    gamefield.show();                             
+    
     // Initiiere Spielvariablen
     boolean gameFinished = false;     // Bool'sche Variable zur Überprüfung, ob das Spiel beendet ist
     int curPlayer = 0;                // Spielerlaufvariable
