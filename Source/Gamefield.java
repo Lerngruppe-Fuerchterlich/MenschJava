@@ -17,6 +17,7 @@ public class Gamefield {
     Color[] printArray = new Color[11]; 
   
     // Gamefield Settings
+    GamefieldPrinter print = new GamefieldPrinter();
     Color[] GamefieldArray = new Color[40];
     String border_right  = " +";  
     String border_left   = " + ";
@@ -25,28 +26,12 @@ public class Gamefield {
   
     // Player Settings 
     static int numberOfPlayers = 0;
-    // Top left  player
-    static int[]   Player_1_Position = new int[] {-1,-1,-1,-1};  
-           Color   Player_1_Color    = RED;        
-           Color[] Player_1_Target   = new Color[] {WHITE,WHITE,WHITE,WHITE}; 
-           Color[] Player_1_Start    = new Color[] {WHITE,WHITE,WHITE,WHITE};
-    // Top right player
-    static int[]   Player_2_Position = new int[] {-1,-1,-1,-1};  
-           Color   Player_2_Color    = BLUE;             
-           Color[] Player_2_Target   = new Color[] {WHITE,WHITE,WHITE,WHITE}; 
-           Color[] Player_2_Start    = new Color[] {WHITE,WHITE,WHITE,WHITE};
-    // Bottom right player     
-    static int[]   Player_3_Position = new int[] {-1,-1,-1,-1}; 
-           Color   Player_3_Color    = YELLOW;            
-           Color[] Player_3_Target   = new Color[] {WHITE,WHITE,WHITE,WHITE};
-           Color[] Player_3_Start    = new Color[] {WHITE,WHITE,WHITE,WHITE};
-    // Bottom left player
-    static int[]   Player_4_Position = new int[] {-1,-1,-1,-1};   
-           Color   Player_4_Color    = GREEN;              
-           Color[] Player_4_Target   = new Color[] {WHITE,WHITE,WHITE,WHITE}; 
-           Color[] Player_4_Start    = new Color[] {WHITE,WHITE,WHITE,WHITE};
-  
-    // -> other classes
+   
+    // -> other classes                                                       
+    GamefieldPlayerAppearance player_1 = new GamefieldPlayerAppearance    (RED); 
+    GamefieldPlayerAppearance player_2 = new GamefieldPlayerAppearance   (BLUE);
+    GamefieldPlayerAppearance player_3 = new GamefieldPlayerAppearance (YELLOW); 
+    GamefieldPlayerAppearance player_4 = new GamefieldPlayerAppearance  (GREEN);
     
   // Attributes -------------------------------
     
@@ -57,182 +42,92 @@ public class Gamefield {
        numberOfPlayers = numOfPlayers;
        resetGamefield();
        switch (numberOfPlayers) {
-        case 2: 
-          for (i=0;i<4;i++) {
-            Player_1_Start[i] = Player_1_Color;
-            Player_3_Start[i] = Player_3_Color;
-          }
-          break;
-        case 3: 
-          for (i=0;i<4;i++) {
-            Player_1_Start[i] = Player_1_Color;
-            Player_2_Start[i] = Player_2_Color;
-            Player_3_Start[i] = Player_3_Color;
-          }
-          break;
-        case 4: 
-          for (i=0;i<4;i++) {
-            Player_1_Start[i] = Player_1_Color;
-            Player_2_Start[i] = Player_2_Color;
-            Player_3_Start[i] = Player_3_Color; 
-            Player_4_Start[i] = Player_4_Color;
-          }
-          break;
-        default:
-          System.out.println("Fehler");
-          break;
-        }
+         case 2:
+            player_2.deactivate();
+            player_4.deactivate();
+            break;
+          case 3:
+            player_4.deactivate();
+            break;
+       }
      };
   
   // Constructor ------------------------------
   
   // Methods ----------------------------------
   
-  
      void setPlayerPosition (int numberOfPlayer, int[] positionArray) {
-     
-        switch (numberOfPlayer) {
-                         
-          case 1: 
-            Player_1_Position = positionArray;
-            break;
-          case 2:
-            // If 2 players, start "face to face" 
-            if (numberOfPlayers > 2) Player_2_Position = positionArray; 
-            else                     Player_3_Position = positionArray;
-            break;
-          case 3:      
-            Player_3_Position = positionArray;
-            break;
-          case 4:     
-            Player_4_Position = positionArray;
-            break;
-          default: 
-            System.out.println("Fehler. Ungültige Spielernummer.");
-            break;
-          }        
+       switch (numberOfPlayer) {
+          case 1:  player_1.setPosition(positionArray);
+                   break;
+          case 2:  // If 2 players, start "face to face"            
+                   if (numberOfPlayers > 2) player_2.setPosition(positionArray); 
+                   else                     player_3.setPosition(positionArray); 
+                   break;              
+          case 3:  player_3.setPosition(positionArray);   
+                   break;
+          case 4:  player_4.setPosition(positionArray); 
+                   break;
+          default: System.out.println("Fehler. Ungültige Spielernummer.");
+                   break;
+          }    
      }
      void show () {          
-     // Set Position as Offset - Free Value:
-     // 0-39 is field
-     // -1 start field
-     // 40-43 target field
      
       // Reset
-      resetGamefield();
-     for (i = 0; i < 4; i++) {
-            
-        if (Player_1_Position[i] >= 0) {
-          if (Player_1_Position[i] <=39)
-               GamefieldArray [     Player_1_Position[i]] = Player_1_Color;
-          else Player_1_Target[43 - Player_1_Position[i]] = Player_1_Color;  
-        } else Player_1_Start[i]                          = Player_1_Color; 
-      
-        if (Player_2_Position[i] >= 0) { 
-          if (Player_2_Position[i] <=39)
-               GamefieldArray [     Player_2_Position[i]] = Player_2_Color;
-          else Player_2_Target[43 - Player_2_Position[i]] = Player_2_Color;          
-        } else Player_2_Start[i]                          = Player_2_Color; 
-      
-        if (Player_3_Position[i] >= 0) {                            
-          if (Player_3_Position[i] <=39)
-               GamefieldArray [     Player_3_Position[i]] = Player_3_Color; 
-          else Player_3_Target[43 - Player_3_Position[i]] = Player_3_Color;    
-        } else Player_3_Start[i]                          = Player_3_Color; 
-      
-        if (Player_4_Position[i] >= 0) {
-          if (Player_4_Position[i] <=39)
-               GamefieldArray [     Player_4_Position[i]] = Player_4_Color; 
-          else Player_4_Target[43 - Player_4_Position[i]] = Player_4_Color;  
-        } else Player_4_Start[i]                          = Player_4_Color;   
-      }
-             
+      resetGamefield();                       
+      player_1.placeOnGamefield (GamefieldArray);  
+      player_2.placeOnGamefield (GamefieldArray); 
+      player_3.placeOnGamefield (GamefieldArray);
+      player_4.placeOnGamefield (GamefieldArray); 
+    
+      // Start Printing         
       System.out.print("\n ");
       for (int i = 0; i < 56; i++) {System.out.print(border_top);}
-    
-      // TO-DO
-      // - read in array to get figures position
-      // - map array values to the grid below:
-    
+       
       // ----------------------
-      genericPrint(Player_1_Start[0],Player_1_Start[1],BLACK,BLACK,GamefieldArray[8],GamefieldArray[9],GamefieldArray[10],BLACK,BLACK,Player_2_Start[0],Player_2_Start[1]);  
-      emptyline ();
-      genericPrint(Player_1_Start[2],Player_1_Start[3],BLACK,BLACK,GamefieldArray[7],Player_2_Target[0],GamefieldArray[11],BLACK,BLACK,Player_2_Start[2],Player_2_Start[3]); 
-      emptyline();
+      print.genericPrint(player_1.start[0],player_1.start[1],BLACK,BLACK,GamefieldArray[8],GamefieldArray[9],GamefieldArray[10],BLACK,BLACK,player_2.start[0],player_2.start[1]);  
+      print.emptyline ();
+      print.genericPrint(player_1.start[2],player_1.start[3],BLACK,BLACK,GamefieldArray[7],player_2.target[0],GamefieldArray[11],BLACK,BLACK,player_2.start[2],player_2.start[3]); 
+      print.emptyline();
       // -------------------------------
-      genericPrint(BLACK,BLACK,BLACK,BLACK,GamefieldArray[6],Player_2_Target[1],GamefieldArray[12],BLACK,BLACK,BLACK,BLACK);   
-      emptyline();    
-      genericPrint(BLACK,BLACK,BLACK,BLACK,GamefieldArray[5],Player_2_Target[2],GamefieldArray[13],BLACK,BLACK,BLACK,BLACK);
-      emptyline();
+      print.genericPrint(BLACK,BLACK,BLACK,BLACK,GamefieldArray[6],player_2.target[1],GamefieldArray[12],BLACK,BLACK,BLACK,BLACK);   
+      print.emptyline();    
+      print.genericPrint(BLACK,BLACK,BLACK,BLACK,GamefieldArray[5],player_2.target[2],GamefieldArray[13],BLACK,BLACK,BLACK,BLACK);
+      print.emptyline();
       // ----------------------    
-      genericPrint(GamefieldArray[0],GamefieldArray[1],GamefieldArray[2],GamefieldArray[3],GamefieldArray[4],Player_2_Target[3],GamefieldArray[14],GamefieldArray[15],GamefieldArray[16],GamefieldArray[17],GamefieldArray[18]);  
-      emptyline();
-      genericPrint(GamefieldArray[39],Player_1_Target[0],Player_1_Target[1],Player_1_Target[2],Player_1_Target[3],BLACK,Player_3_Target[3],Player_3_Target[2],Player_3_Target[1],Player_3_Target[0],GamefieldArray[19]);
-      emptyline();      
-      genericPrint(GamefieldArray[38],GamefieldArray[37],GamefieldArray[36],GamefieldArray[35],GamefieldArray[34],Player_4_Target[3],GamefieldArray[24],GamefieldArray[23],GamefieldArray[22],GamefieldArray[21],GamefieldArray[20]);   
-      emptyline();
+      print.genericPrint(GamefieldArray[0],GamefieldArray[1],GamefieldArray[2],GamefieldArray[3],GamefieldArray[4],player_2.target[3],GamefieldArray[14],GamefieldArray[15],GamefieldArray[16],GamefieldArray[17],GamefieldArray[18]);  
+      print.emptyline();
+      print.genericPrint(GamefieldArray[39],player_1.target[0],player_1.target[1],player_1.target[2],player_1.target[3],BLACK,player_3.target[3],player_3.target[2],player_3.target[1],player_3.target[0],GamefieldArray[19]);
+      print.emptyline();      
+      print.genericPrint(GamefieldArray[38],GamefieldArray[37],GamefieldArray[36],GamefieldArray[35],GamefieldArray[34],player_4.target[3],GamefieldArray[24],GamefieldArray[23],GamefieldArray[22],GamefieldArray[21],GamefieldArray[20]);   
+      print.emptyline();
       // ----------------------    
-      genericPrint(BLACK,BLACK,BLACK,BLACK,GamefieldArray[33],Player_4_Target[2],GamefieldArray[25],BLACK,BLACK,BLACK,BLACK); 
-      emptyline();   
-      genericPrint(BLACK,BLACK,BLACK,BLACK,GamefieldArray[32],Player_4_Target[1],GamefieldArray[26],BLACK,BLACK,BLACK,BLACK); 
-      emptyline();
+      print.genericPrint(BLACK,BLACK,BLACK,BLACK,GamefieldArray[33],player_4.target[2],GamefieldArray[25],BLACK,BLACK,BLACK,BLACK); 
+      print.emptyline();   
+      print.genericPrint(BLACK,BLACK,BLACK,BLACK,GamefieldArray[32],player_4.target[1],GamefieldArray[26],BLACK,BLACK,BLACK,BLACK); 
+      print.emptyline();
       // ----------------------  
-      genericPrint(Player_4_Start[0],Player_4_Start[1],BLACK,BLACK,GamefieldArray[31],Player_4_Target[0],GamefieldArray[27],BLACK,BLACK,Player_3_Start[0],Player_3_Start[1]); 
-      emptyline();        
-      genericPrint(Player_4_Start[2],Player_4_Start[3],BLACK,BLACK,GamefieldArray[30],GamefieldArray[29],GamefieldArray[28],BLACK,BLACK,Player_3_Start[2],Player_3_Start[3]); 
+      print.genericPrint(player_4.start[0],player_4.start[1],BLACK,BLACK,GamefieldArray[31],player_4.target[0],GamefieldArray[27],BLACK,BLACK,player_3.start[0],player_3.start[1]); 
+      print.emptyline();        
+      print.genericPrint(player_4.start[2],player_4.start[3],BLACK,BLACK,GamefieldArray[30],GamefieldArray[29],GamefieldArray[28],BLACK,BLACK,player_3.start[2],player_3.start[3]); 
     
       System.out.print("\n ");
       for (int i = 0; i < 56; i++) {System.out.print(border_bottom);} 
       AnsiConsole.systemUninstall(); 
      }
-  
-     void genericPrint(Color p1,Color p2,Color p3,Color p4,Color p5,Color p6,Color p7,Color p8,Color p9,Color p10,Color p11) {
-         System.out.print("\n" + border_left);
-         setPrintArr (p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11);
-         printLine (printArray);       
-         System.out.print(border_right);
-     }
-     void setPrintArr (Color p1,Color p2,Color p3,Color p4,Color p5,Color p6,Color p7,Color p8,Color p9,Color p10,Color p11) {
-       printArray[0]  = p1;    
-       printArray[1]  = p2;
-       printArray[2]  = p3;
-       printArray[3]  = p4;
-       printArray[4]  = p5;
-       printArray[5]  = p6;
-       printArray[6]  = p7;
-       printArray[7]  = p8;
-       printArray[8]  = p9; 
-       printArray[9]  = p10;
-       printArray[10] = p11;
-      }
-     void printLine (Color [] array) {
-        for (int i = 0; i < array.length; i++) {
-          if (array[i] != BLACK) fig(array[i]);
-          else                   skipfieldspacing();
-          if (i != array.length-1) spacing();
-        }
-     }
-     
-     void fig (Color color) 
-          {System.out.print(ansi().fg(color).bg(color).a("XX").reset());}
-     
-     void spacing ()          {System.out.print("   ");}
-     void skipfieldspacing () {System.out.print("  ");}
-     
-    void emptyline ()
-         {genericPrint(BLACK,BLACK,BLACK,BLACK,BLACK,BLACK,BLACK,BLACK,BLACK,BLACK,BLACK);}        
-  
+       
      void resetGamefield () {
       for (int i = 0; i < 4; i++) {
-        Player_1_Start[i]  = WHITE;
-        Player_2_Start[i]  = WHITE;     
-        Player_3_Start[i]  = WHITE;
-        Player_4_Start[i]  = WHITE;
+        player_1.start[i]  = WHITE;
+        player_2.start[i]  = WHITE;     
+        player_3.start[i]  = WHITE;
+        player_4.start[i]  = WHITE;
       
-        Player_1_Target[i] = WHITE;
-        Player_2_Target[i] = WHITE;
-        Player_3_Target[i] = WHITE;
-        Player_4_Target[i] = WHITE;
+        player_1.target[i] = WHITE;
+        player_2.target[i] = WHITE;
+        player_3.target[i] = WHITE;
+        player_4.target[i] = WHITE;
       }
       for (int i = 0; i < 40; i++) {
          GamefieldArray[i] = WHITE;   
