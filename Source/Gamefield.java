@@ -14,13 +14,12 @@ public class Gamefield {
     // Others
     static int i = 0;                         // Counter 
     Color[] GamefieldArray = new Color[40];   // Gamefield position array
-  
     static int numberOfPlayers = 0;           // Absolute number of players
    
   // -> other classes  
-                                    
-    GamefieldPrinter print = new GamefieldPrinter();
-                       
+    // Class for generation of beautiful console interface                                
+    GamefieldPrinter print             = new GamefieldPrinter();
+    // Class for default player appearance on gamefield                   
     GamefieldPlayerAppearance player_1 = new GamefieldPlayerAppearance    (RED); 
     GamefieldPlayerAppearance player_2 = new GamefieldPlayerAppearance   (BLUE);
     GamefieldPlayerAppearance player_3 = new GamefieldPlayerAppearance (YELLOW); 
@@ -82,8 +81,27 @@ public class Gamefield {
       player_2.placeOnGamefield (GamefieldArray); 
       player_3.placeOnGamefield (GamefieldArray);
       player_4.placeOnGamefield (GamefieldArray); 
-    
       // Start Printing         
+      printGamefield();
+      // uninstall console interface
+      AnsiConsole.systemUninstall(); 
+     }
+       
+     void resetGamefield () {
+      for (int i = 0; i < 4; i++) {
+        player_1.start[i]  = WHITE;
+        player_2.start[i]  = WHITE;     
+        player_3.start[i]  = WHITE;
+        player_4.start[i]  = WHITE;
+      
+        player_1.target[i] = WHITE;
+        player_2.target[i] = WHITE;
+        player_3.target[i] = WHITE;
+        player_4.target[i] = WHITE;
+      }
+      for (int i = 0; i < 40; i++) {GamefieldArray[i] = WHITE;}
+    }
+  void printGamefield () {
       System.out.print("\n ");
       print.printBorderTop();
       // ----------------------
@@ -114,24 +132,7 @@ public class Gamefield {
       print.genericPrint(player_4.start[2],player_4.start[3],BLACK,BLACK,GamefieldArray[30],GamefieldArray[29],GamefieldArray[28],BLACK,BLACK,player_3.start[2],player_3.start[3]);   
       System.out.print("\n ");
       print.printBorderBottom(); 
-      // uninstall console interface
-      AnsiConsole.systemUninstall(); 
-     }
-       
-     void resetGamefield () {
-      for (int i = 0; i < 4; i++) {
-        player_1.start[i]  = WHITE;
-        player_2.start[i]  = WHITE;     
-        player_3.start[i]  = WHITE;
-        player_4.start[i]  = WHITE;
-      
-        player_1.target[i] = WHITE;
-        player_2.target[i] = WHITE;
-        player_3.target[i] = WHITE;
-        player_4.target[i] = WHITE;
-      }
-      for (int i = 0; i < 40; i++) {GamefieldArray[i] = WHITE;}
-    }
+  }
   
   // Methods ----------------------------------
   
