@@ -1,0 +1,54 @@
+﻿[Files]
+File0=C:\Users\ilkas\Documents\GitHub\MenschJava\Source\Gamefield.java
+File1=C:\Users\ilkas\Documents\GitHub\MenschJava\Source\GamefieldPlayerAppearance.java
+File2=C:\Users\ilkas\Documents\GitHub\MenschJava\Source\mainGame.java
+
+[Box:  - Gamefield]
+X=20
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Box:  - GamefieldPlayerAppearance]
+X=71
+Y=483
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Box:  - mainGame]
+X=478
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Diagram]
+comments=0
+OffsetX=388
+OffsetY=0
+Visibility=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+ShowConnections=0
+Fontname=Segoe UI
+Fontsize=12
+ShowObjectDiagram=0
+
+[Connections]
+V0=Gamefield#GamefieldPlayerAppearance#AssociationDirected####0#0#0###0#0
+
+[Interactive]
+I0=
+

@@ -4,7 +4,7 @@
  -------------------------------------------------------  
   Date:         24.11.2020
 ------------------------------------------------------*/
-import org.fusesource.jansi.AnsiConsole;
+import        org.fusesource.jansi.AnsiConsole;
 import static org.fusesource.jansi.Ansi.*;
 import static org.fusesource.jansi.Ansi.Color.*;
 
@@ -49,6 +49,8 @@ public class Gamefield {
           case 3:
             player_4.deactivate();
             break;
+          default:
+            break;
        }
      };
   
@@ -72,8 +74,14 @@ public class Gamefield {
                    break;
           }    
      }
-     void show () {          
-     
+     void show (int[] p1_posArr, int[] p2_posArr, int[] p3_posArr, int[] p4_posArr) {
+          setPlayerPosition(1, p1_posArr);
+          setPlayerPosition(2, p2_posArr);
+          setPlayerPosition(3, p3_posArr);
+          setPlayerPosition(4, p4_posArr);
+          show();
+       }
+     void show () { 
       // Reset
       resetGamefield();                       
       player_1.placeOnGamefield (GamefieldArray);  

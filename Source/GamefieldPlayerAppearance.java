@@ -21,7 +21,10 @@ public class GamefieldPlayerAppearance {
     };
   // Methods 
     void setPosition (int [] positionArray) {
-          position = positionArray;
+      for (i = 0; i < 4 ; i++) {
+        // Check if deactivated
+        if (position [i] != -42) position[i] = positionArray[i];
+      } 
     }
   
     void deactivate () {
