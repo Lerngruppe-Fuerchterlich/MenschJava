@@ -1,5 +1,5 @@
 /*------------------------------------------------------ 
-  Program:      Mensch Ärgere Dich Nicht
+  Program:      Mensch Aergere Dich Nicht
   Class:        GamefieldPrinter
  -------------------------------------------------------  
   Date:         24.11.2020
@@ -26,10 +26,10 @@ public class GamefieldPrinter {
   void setBorderTop    (String appearance) {border_top    = appearance;}
   void setBorderBottom (String appearance) {border_bottom = appearance;}
   void printBorderTop () {
-    for (int i = 0; i < 56; i++) {System.out.print(print.border_top);}
+    for (int i = 0; i < 56; i++) {System.out.print(border_top);}
   }
   void printBorderBottom () {
-    for (int i = 0; i < 56; i++) {System.out.print(print.border_bottom);}
+    for (int i = 0; i < 56; i++) {System.out.print(border_bottom);}
   }
   
   void genericPrint(Color p1,Color p2,Color p3,Color p4,Color p5,Color p6,Color p7,Color p8,Color p9,Color p10,Color p11) {
