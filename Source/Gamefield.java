@@ -13,16 +13,11 @@ public class Gamefield {
   // -> own
      
     // Others
-    static int i = 0;
-    Color[] printArray = new Color[11]; 
+    static int i = 0; 
   
     // Gamefield Settings
     GamefieldPrinter print = new GamefieldPrinter();
     Color[] GamefieldArray = new Color[40];
-    String border_right  = " +";  
-    String border_left   = " + ";
-    String border_top    = "+";
-    String border_bottom = "+";
   
     // Player Settings 
     static int numberOfPlayers = 0;
@@ -91,7 +86,7 @@ public class Gamefield {
     
       // Start Printing         
       System.out.print("\n ");
-      for (int i = 0; i < 56; i++) {System.out.print(border_top);}
+      for (int i = 0; i < 56; i++) {System.out.print(print.border_top);}
        
       // ----------------------
       print.genericPrint(player_1.start[0],player_1.start[1],BLACK,BLACK,GamefieldArray[8],GamefieldArray[9],GamefieldArray[10],BLACK,BLACK,player_2.start[0],player_2.start[1]);  
@@ -121,7 +116,7 @@ public class Gamefield {
       print.genericPrint(player_4.start[2],player_4.start[3],BLACK,BLACK,GamefieldArray[30],GamefieldArray[29],GamefieldArray[28],BLACK,BLACK,player_3.start[2],player_3.start[3]); 
     
       System.out.print("\n ");
-      for (int i = 0; i < 56; i++) {System.out.print(border_bottom);} 
+      for (int i = 0; i < 56; i++) {System.out.print(print.border_bottom);} 
       AnsiConsole.systemUninstall(); 
      }
        
