@@ -13,10 +13,10 @@ public class Gamefield {
   // -> own
     static int i = 0;
     Color[] printArray = new Color[11]; 
-    static int Player_1_Startfield = 0; 
-    static int Player_2_Startfield = 0;
-    static int Player_3_Startfield = 0;
-    static int Player_4_Startfield = 0;
+    static int[] Player_1_Position = new int[] {0,0,0,0}; 
+    static int[] Player_2_Position = new int[] {0,0,0,0};
+    static int[] Player_3_Position = new int[] {0,0,0,0};
+    static int[] Player_4_Position = new int[] {0,0,0,0};
   
     String border_right  = " +";  
     String border_left   = " + ";
@@ -29,14 +29,35 @@ public class Gamefield {
   // Constructor ------------------------------
      // Default-Constructor
      Gamefield(int numOfPlayers){
-         AnsiConsole.systemInstall();    
+         AnsiConsole.systemInstall();
      };
   
   // Constructor ------------------------------
   
   // Methods ----------------------------------
   
-     void show (int p1pos, int p2pos, int p3pos, int p4pos) {             
+  
+     void setPlayerPosition (int numberOfPlayer, int[] positionArray) {
+        switch (numberOfPlayer) {
+                         
+          case 1: 
+            Player_1_Position = positionArray;
+            break;
+          case 2: 
+            Player_2_Position = positionArray; 
+            break;
+          case 3:      
+            Player_3_Position = positionArray;
+            break;
+          case 4:     
+            Player_4_Position = positionArray;
+            break;
+          default: 
+            System.out.println("Fehler. Ungültige Spielernummer.");
+            break;
+          }        
+     }
+     void show () {             
       System.out.print("\n ");
       for (int i = 0; i < 56; i++) {System.out.print(border_top);}
     
@@ -77,13 +98,13 @@ public class Gamefield {
       AnsiConsole.systemUninstall(); 
      }
   
-     // Overload Method "show"
+     /* Overload Method "show"
      void show (int p1pos, int p2pos, int p3pos) {
         show (p1pos, p2pos, p3pos, -42);
      }
      void show (int p1pos, int p2pos) {
         show (p1pos, p2pos, -42, -42);
-     }
+     }                                   */
      void genericPrint(Color p1,Color p2,Color p3,Color p4,Color p5,Color p6,Color p7,Color p8,Color p9,Color p10,Color p11) {
          System.out.print("\n" + border_left);
          setPrintArr (p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11);

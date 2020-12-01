@@ -35,7 +35,8 @@ public class Player {
   
   // Setzte Spieler-Offset
   void setOffset(int cntPlayer) {
-    offset = (cntPlayer-1) * 10;
+    if (cntPlayer <3) offset = (cntPlayer-1) * 20;
+    else offset = (cntPlayer-1) * 10;
   }
   
   // Lese Spieler-Offset

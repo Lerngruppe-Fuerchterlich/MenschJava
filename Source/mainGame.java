@@ -59,7 +59,7 @@ public class mainGame {
 
     System.out.println("Das Spiel beginnt. Viel Erfolg!");     
     Gamefield gamefield = new Gamefield(numOfPlayers);
-    gamefield.show(1,2,3,4);
+    gamefield.show();
 
     // Initiiere Spielvariablen
     boolean gameFinished = false;     // Bool'sche Variable zur Überprüfung, ob das Spiel beendet ist
