@@ -1,8 +1,8 @@
 public class Piece {
-  // Variablen
+  // Attributes -------------------------------
   int[] cntPiece = new int[4];
 
-  // Constructor
+  // Constuctor -------------------------------
   Piece(){
     // Setzen der initialen Positionen der Figuren
     cntPiece[0] = -1;
@@ -10,7 +10,7 @@ public class Piece {
     cntPiece[2] = -1;
     cntPiece[3] = -1;
   }
-
+  // Methods ----------------------------------
   // Setze Position der bewegten Figur
   void setPiecePosition(int numPiece, int cntDice){
     // Variablen

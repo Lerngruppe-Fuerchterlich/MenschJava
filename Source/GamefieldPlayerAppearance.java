@@ -1,5 +1,5 @@
 /*------------------------------------------------------ 
-  Program:      Mensch Ärgere Dich Nicht
+  Program:      Mensch ï¿½rgere Dich Nicht
   Class:        GamefieldPlayerAppearance
  -------------------------------------------------------  
   Date:         24.11.2020
@@ -8,7 +8,7 @@ import org.fusesource.jansi.AnsiConsole;
 import static org.fusesource.jansi.Ansi.*;
 import static org.fusesource.jansi.Ansi.Color.*;
 
-public class GamefieldPlayerAppearance {
+public class GamefieldPlayerAppearance{
   // Attributes -------------------------------  
     int i = 0;
     int[]  position  = new int[] {-1,-1,-1,-1};  

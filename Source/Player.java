@@ -11,15 +11,15 @@ import java.io.InputStreamReader;
 import java.util.Random;
 
 public class Player {
-  // Variables
+  // Attributes -------------------------------
   int offset;
   String strPlayerName;
   
-  // Constuctor
+  // Constuctor -------------------------------
   Player(){
     Piece piece = new Piece();
   }
-  
+  // Methods ----------------------------------
   // Setze Spielernamen
   void setPlayerName(int cntPlayer) throws IOException {
     // Abfrage User-Eingabe

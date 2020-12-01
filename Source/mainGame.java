@@ -14,9 +14,12 @@ import java.io.InputStreamReader;
 public class mainGame {
 
   public static void main(String[] args) throws IOException{
-    // Variables
+    // Attributes -------------------------------
     int [] testArr1 = new int[] {1,3,5,7}; 
     int [] testArr2 = new int[] {-1,-1,42,10};
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));   // String Input Reader
+
+    // Methods ----------------------------------
     //Clear Terminal
     clrTerminal();
 
@@ -54,17 +57,17 @@ public class mainGame {
     }
     // Wenn Initialisierung fehltschlägt, beende Spiel und gib Fehlermeldung aus.
     else{      
-      System.out.println("Spielerinitialisierung fehlgeschlafen. Spiel wird beendet.");
-      //return;
+      System.out.println("Es ist ein unerwarteter Fehler aufgetreten. Das Spiel wird beendet.\n\nDrücken Sie eine beliebige Taste...");
+      br.readLine();
     }
 
     System.out.println("Das Spiel beginnt. Viel Erfolg!");     
     Gamefield gamefield = new Gamefield(numOfPlayers);
-    //gamefield.resetGamefield();
-    //gamefield.show();
-    //gamefield.setPlayerPosition(1,testArr1);
-    //gamefield.setPlayerPosition(2,testArr2);
-    gamefield.show(testArr1, testArr1, testArr2, testArr2);                             
+    //gamefield.resetGamefield(); // Spielfeldreset, alle Figuren entfernen, alle Felder weiß
+    //gamefield.show();           // Anzeigen des Spielfeldes
+    //gamefield.setPlayerPosition(1,testArr1);  // Aktualisieren der Figurpositionen Spieler 1
+    //gamefield.setPlayerPosition(2,testArr2);  // Aktualisieren der Figurpositionen Spieler 2
+    gamefield.show(testArr1, testArr1, testArr2, testArr2); // Anzeigen + aktualisieren des Spielfeldes für alle Spieler
     
     // Initiiere Spielvariablen
     boolean gameFinished = false;     // Bool'sche Variable zur Überprüfung, ob das Spiel beendet ist
@@ -72,9 +75,8 @@ public class mainGame {
     int oldPlayer;                    // Alter Spieler
     String curPlayerName;             // Spielername
     String strContainer = "";         // String Container (Dynamische Benutzereingabe)
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));   // String Input Reader
     boolean gameRoutineStart = false; // Spielroutine, initialer Start
-
+    
     // Starte Spielroutine
     do{
       // Spielroutine, initialer Start + Wahl nächster Spieler
@@ -96,6 +98,7 @@ public class mainGame {
       switch(curPlayer){
         case 1:{
           curPlayerName = Player_1.getPlayerName();
+          //outNewRoundInit(curPlayerName);
           break;
         }
         case 2:{
@@ -147,6 +150,11 @@ public class mainGame {
     }while(bCompare != true);
     
     return numPlayers;
+  }
+
+  // 
+  public static void outNewRoundInit(String inputName){
+    System.out.println(" Spieler");
   }
 
   // Methode zur Bereinigung der Console
