@@ -49,7 +49,6 @@ public class Player {
     Random rnd = new Random();
     int cntEyes = rnd.nextInt(5);   // Zufallszahl zwischen 0 und 5 -> 6 Werte
     cntEyes = cntEyes + 1;      // Augenzahl zwischen 1 und 6.
-    
     return cntEyes;
   }
 }

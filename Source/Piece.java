@@ -1,3 +1,10 @@
+/*------------------------------------------------------ 
+  Program:      Mensch Aergere Dich Nicht
+  Class:        GamefieldPrinter
+ -------------------------------------------------------  
+  Date:         24.11.2020
+------------------------------------------------------*/
+
 public class Piece {
   // Attributes -------------------------------
   int[] cntPiece = new int[4];
@@ -20,7 +27,7 @@ public class Piece {
     cntPiece[numPiece] = CurPosition + cntDice;
   }
 
-  int getPiecePositiopn(int numPiece){
-    return cntPiece[numPiece];    
+  void getPiecePositions(int Player){
+    
   }
 }

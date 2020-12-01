@@ -76,6 +76,7 @@ public class mainGame {
     String curPlayerName;             // Spielername
     String strContainer = "";         // String Container (Dynamische Benutzereingabe)
     boolean gameRoutineStart = false; // Spielroutine, initialer Start
+    int cntDice;                      // Würfelzahl
     
     // Starte Spielroutine
     do{
@@ -98,19 +99,26 @@ public class mainGame {
       switch(curPlayer){
         case 1:{
           curPlayerName = Player_1.getPlayerName();
-          //outNewRoundInit(curPlayerName);
+          System.out.println("Spieler '" + curPlayerName + "' ist am Zug!\nWürfeln Sie indem Sie eine beliebige Taste drücken...");
+          br.readLine();
+          cntDice = Player_1.roll_dice();
+          System.out.println("Sie haben eine " + cntDice + " gewürfelt. Aktuell befinden sich Ihre Figuren auf nachfolgenden Positionen:");
+          outPiecePositions(Player_1);
           break;
         }
         case 2:{
           curPlayerName = Player_2.getPlayerName();
+          System.out.println("Spieler '" + curPlayerName + "' ist am Zug!");
           break;
         }
         case 3:{          
           curPlayerName = Player_3.getPlayerName();
+          System.out.println("Spieler '" + curPlayerName + "' ist am Zug!");
           break;
         }
         case 4:{
           curPlayerName = Player_4.getPlayerName();
+          System.out.println("Spieler '" + curPlayerName + "' ist am Zug!");
           break;
         }
         default:{
@@ -152,9 +160,12 @@ public class mainGame {
     return numPlayers;
   }
 
-  // 
-  public static void outNewRoundInit(String inputName){
-    System.out.println(" Spieler");
+  public void outPiecePositions(Player player){
+    //
+    //
+    //  Aktuelle Piece Positionen Abfragen entsprechend Spieler
+    //
+    //
   }
 
   // Methode zur Bereinigung der Console
