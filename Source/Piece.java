@@ -27,7 +27,7 @@ public class Piece {
     cntPiece[numPiece] = CurPosition + cntDice;
   }
 
-  void getPiecePositions(int Player){
-    
+  int[] getPiecePositions(){
+    return cntPiece;
   }
 }

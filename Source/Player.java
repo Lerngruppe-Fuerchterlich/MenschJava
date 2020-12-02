@@ -17,7 +17,6 @@ public class Player {
   
   // Constuctor -------------------------------
   Player(){
-    Piece piece = new Piece();
   }
   // Methods ----------------------------------
   // Setze Spielernamen
@@ -35,7 +34,7 @@ public class Player {
   
   // Setzte Spieler-Offset
   void setOffset(int cntPlayer) {
-    if (cntPlayer <3) offset = (cntPlayer-1) * 20;
+    if (cntPlayer < 3) offset = (cntPlayer - 1) * 20;
     else offset = (cntPlayer-1) * 10;
   }
   
