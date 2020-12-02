@@ -230,7 +230,7 @@ public class mainGame {
       System.out.println("Ihre sich in der Basis befindliche Figur kann nicht auf das Spielfeld gerückt werden, da Sie keine '6' gewürfelt haben.");
       return false;
     }
-    else if(curPiecePosition(cntPiece) == -1 && cntDice == 6){
+    else if(curPiecePosition[cntPiece] == -1 && cntDice == 6){
       return true;
     }
 
