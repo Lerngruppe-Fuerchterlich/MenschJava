@@ -79,19 +79,20 @@ public class mainGame {
       System.out.println("\nSpieler '" + curPlayerName + "' ist am Zug!\nWürfeln Sie indem Sie eine beliebige Taste drücken...");
       // Hier fehlt die Abfrage, ob alle Figuren in der Basis sind, damit 3 Mal gewürfelt werden kann.
       br.readLine();
-      cntDice = Player[curPlayer].roll_dice();
+      //cntDice = Player[curPlayer].roll_dice();
+      cntDice = 6;  // #### TEST ####
       System.out.println("Sie haben eine " + cntDice + " gewürfelt. Aktuell befinden sich Ihre Figuren auf nachfolgenden Positionen:");
       outPiecePositions(Player[curPlayer], Piece[curPlayer]);
       System.out.println("Welche Figur möchten Sie auf dem Spielfeld verrücken?");
       do{
         strContainer = br.readLine();
-        System.out.println("### " + strContainer + " ###");
         InputCheck = checkPiecePosition(strContainer, Piece[curPlayer], cntDice);
       }while(InputCheck != true);
       updatePiecePositions(strContainer, Piece[curPlayer], cntDice);
-      //checkEnemies(Piece_1, Piece_2, Piece_3, Piece_4);
+      checkEnemies(Piece, numOfPlayers, curPlayer);
       gamefield.setPlayerPosition(1, Piece[curPlayer].getPiecePositions());  // Update Spielfeld
     }while (gameFinished != true);
+    br.readLine();  // Verhindern, dass cmd-Window geschlossen wird.
   }
   
   // ############################################################################################################################
@@ -206,6 +207,26 @@ public class mainGame {
   public static void updatePiecePositions(String strPiece, Piece Piece, int cntDice){
     int numPiece = Integer.parseInt(strPiece);
     Piece.setPiecePosition(numPiece, cntDice);
+  }
+
+  // Prüfen ob gegnerische Figuren auf der aktualisierten Position sind.
+  public static void checkEnemies(Piece[] Piece, int numOfPlayers, int curPlayer){
+    int[] curPlayerPiecePositions = Piece[curPlayer].getPiecePositions();
+    int[] enemyPlayerPiecePositions = new int[4];
+    
+    for (int i = 0; i < numOfPlayers; i++){
+      enemyPlayerPiecePositions = Piece[i].getPiecePositions();
+      if(i != curPlayer){
+        for (int k = 0; k < 4; k++){
+          for(int l = 0; l < 4; l++){
+            if(curPlayerPiecePositions[k] == enemyPlayerPiecePositions[l]){
+              Piece[l].resetPiecePosition(l);
+              return;
+            }
+          }
+        }
+      }
+    }
   }
 
   // Methode zur Bereinigung der Console

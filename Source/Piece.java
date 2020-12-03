@@ -19,7 +19,7 @@ public class Piece {
   }
   // Methods ----------------------------------
   // Setze Position der bewegten Figur
-  void setPiecePosition(int numPiece, int cntDice){
+  public void setPiecePosition(int numPiece, int cntDice){
     // Variablen
     int CurPosition;
 
@@ -27,7 +27,13 @@ public class Piece {
     cntPiece[numPiece] = CurPosition + cntDice;
   }
 
-  int[] getPiecePositions(){
+  public void resetPiecePosition(int numPiece){
+    int resetPosition = -1;
+
+    cntPiece[numPiece] = resetPosition;
+  }
+
+  public int[] getPiecePositions(){
     return cntPiece;
   }
 }
