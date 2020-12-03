@@ -23,7 +23,7 @@ public class Player {
   void setPlayerName(int cntPlayer) throws IOException {
     // Abfrage User-Eingabe
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    System.out.print("Spieler " + cntPlayer + ": ");
+    System.out.print("Spieler " + (cntPlayer + 1) + ": ");
     strPlayerName = br.readLine();
   }
   
@@ -34,8 +34,8 @@ public class Player {
   
   // Setzte Spieler-Offset
   void setOffset(int cntPlayer) {
-    if (cntPlayer < 3) offset = (cntPlayer - 1) * 20;
-    else offset = (cntPlayer-1) * 10;
+    if (cntPlayer < 3) offset = cntPlayer * 20;
+    else offset = (cntPlayer) * 10;
   }
   
   // Lese Spieler-Offset
