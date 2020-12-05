@@ -42,7 +42,7 @@ public class mainGame {
     System.out.println("Das Spiel beginnt. Viel Erfolg!");     
     Gamefield gamefield = new Gamefield(numOfPlayers);
     //gamefield.resetGamefield(); // Spielfeldreset, alle Figuren entfernen, alle Felder weiß
-    //gamefield.show();           // Anzeigen des Spielfeldes
+    gamefield.show();           // Anzeigen des Spielfeldes
     //gamefield.setPlayerPosition(1,testArr1);  // Aktualisieren der Figurpositionen Spieler 1
     //gamefield.setPlayerPosition(2,testArr2);  // Aktualisieren der Figurpositionen Spieler 2
     //gamefield.show(testArr1, testArr1, testArr2, testArr2); // Anzeigen + aktualisieren des Spielfeldes für alle Spieler

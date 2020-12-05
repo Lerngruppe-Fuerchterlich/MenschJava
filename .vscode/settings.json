@@ -1,6 +1,7 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "Source/jansi.jar"
+        "Source/jansi.jar",
+        "Source/JColor-5.0.1.jar"
     ]
 }
