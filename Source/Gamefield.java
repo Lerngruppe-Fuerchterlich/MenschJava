@@ -97,43 +97,43 @@ public class Gamefield {
         player_3.start[i]  = c.GRAY;
         player_4.start[i]  = c.GRAY;
       
-        player_1.target[i] = c.GRAY;
-        player_2.target[i] = c.GRAY;
-        player_3.target[i] = c.GRAY;
-        player_4.target[i] = c.GRAY;
+        player_1.target[i] = c.GRAY_T;
+        player_2.target[i] = c.GRAY_T;
+        player_3.target[i] = c.GRAY_T;
+        player_4.target[i] = c.GRAY_T;
       }
-      for (int i = 0; i < 40; i++) {GamefieldArray[i] = c.WHITE;}
+      for (int i = 0; i < 40; i++) {GamefieldArray[i] = c.BG_FIELD;}
     }
   void printGamefield_Jcolor () {
     System.out.print("\n");
     print.printBorderTop();
     // ----------------------
     //print.genericPrint_Jcolor(c.WHITE,c.BLACK,c.GREEN,c.BLUE,c.RED,c.YELLOW,c.BLACK,c.BLACK,c.BLACK,c.BLACK,c.BLACK);  
-    print.genericPrint_Jcolor(player_1.start[0],player_1.start[1],c.BG_GAMEFIELD,c.BG_GAMEFIELD,GamefieldArray[8],GamefieldArray[9],GamefieldArray[10],c.BG_GAMEFIELD,c.BG_GAMEFIELD,player_2.start[0],player_2.start[1]);  
+    print.genericPrint_Jcolor(player_1.start[0],0,player_1.start[1],0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,GamefieldArray[8],8,GamefieldArray[9],9,GamefieldArray[10],10,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,player_2.start[0],0,player_2.start[1],0);  
     print.emptyline_Jcolor ();
-    print.genericPrint_Jcolor(player_1.start[2],player_1.start[3],c.BG_GAMEFIELD,c.BG_GAMEFIELD,GamefieldArray[7],player_2.target[0],GamefieldArray[11],c.BG_GAMEFIELD,c.BG_GAMEFIELD,player_2.start[2],player_2.start[3]); 
+    print.genericPrint_Jcolor(player_1.start[2],0,player_1.start[3],0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,GamefieldArray[7],7,player_2.target[0],40,GamefieldArray[11],11,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,player_2.start[2],0,player_2.start[3],0); 
     print.emptyline_Jcolor();
     // -------------------------------
-    print.genericPrint_Jcolor(c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD,GamefieldArray[6],player_2.target[1],GamefieldArray[12],c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD);   
+    print.genericPrint_Jcolor(c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,GamefieldArray[6],6,player_2.target[1],41,GamefieldArray[12],12,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0);   
     print.emptyline_Jcolor();    
-    print.genericPrint_Jcolor(c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD,GamefieldArray[5],player_2.target[2],GamefieldArray[13],c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD);
+    print.genericPrint_Jcolor(c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,GamefieldArray[5],5,player_2.target[2],42,GamefieldArray[13],13,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0);
     print.emptyline_Jcolor();
     // ----------------------    
-    print.genericPrint_Jcolor(GamefieldArray[0],GamefieldArray[1],GamefieldArray[2],GamefieldArray[3],GamefieldArray[4],player_2.target[3],GamefieldArray[14],GamefieldArray[15],GamefieldArray[16],GamefieldArray[17],GamefieldArray[18]);  
+    print.genericPrint_Jcolor(GamefieldArray[0],0,GamefieldArray[1],1,GamefieldArray[2],2,GamefieldArray[3],3,GamefieldArray[4],4,player_2.target[3],43,GamefieldArray[14],14,GamefieldArray[15],15,GamefieldArray[16],16,GamefieldArray[17],17,GamefieldArray[18],18);  
     print.emptyline_Jcolor();
-    print.genericPrint_Jcolor(GamefieldArray[39],player_1.target[0],player_1.target[1],player_1.target[2],player_1.target[3],c.BG_GAMEFIELD,player_3.target[3],player_3.target[2],player_3.target[1],player_3.target[0],GamefieldArray[19]);
+    print.genericPrint_Jcolor(GamefieldArray[39],39,player_1.target[0],40,player_1.target[1],41,player_1.target[2],42,player_1.target[3],43,c.BG_GAMEFIELD,0,player_3.target[3],43,player_3.target[2],42,player_3.target[1],41,player_3.target[0],40,GamefieldArray[19],19);
     print.emptyline_Jcolor();      
-    print.genericPrint_Jcolor(GamefieldArray[38],GamefieldArray[37],GamefieldArray[36],GamefieldArray[35],GamefieldArray[34],player_4.target[3],GamefieldArray[24],GamefieldArray[23],GamefieldArray[22],GamefieldArray[21],GamefieldArray[20]);   
+    print.genericPrint_Jcolor(GamefieldArray[38],38,GamefieldArray[37],37,GamefieldArray[36],36,GamefieldArray[35],35,GamefieldArray[34],34,player_4.target[3],43,GamefieldArray[24],24,GamefieldArray[23],23,GamefieldArray[22],22,GamefieldArray[21],21,GamefieldArray[20],20);   
     print.emptyline_Jcolor();
     // ----------------------    
-    print.genericPrint_Jcolor(c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD,GamefieldArray[33],player_4.target[2],GamefieldArray[25],c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD); 
+    print.genericPrint_Jcolor(c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,GamefieldArray[33],33,player_4.target[2],42,GamefieldArray[25],25,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0); 
     print.emptyline_Jcolor();   
-    print.genericPrint_Jcolor(c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD,GamefieldArray[32],player_4.target[1],GamefieldArray[26],c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD,c.BG_GAMEFIELD); 
+    print.genericPrint_Jcolor(c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,GamefieldArray[32],32,player_4.target[1],41,GamefieldArray[26],26,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0); 
     print.emptyline_Jcolor();
     // ----------------------  
-    print.genericPrint_Jcolor(player_4.start[0],player_4.start[1],c.BG_GAMEFIELD,c.BG_GAMEFIELD,GamefieldArray[31],player_4.target[0],GamefieldArray[27],c.BG_GAMEFIELD,c.BG_GAMEFIELD,player_3.start[0],player_3.start[1]); 
+    print.genericPrint_Jcolor(player_4.start[0],0,player_4.start[1],0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,GamefieldArray[31],31,player_4.target[0],40,GamefieldArray[27],27,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,player_3.start[0],0,player_3.start[1],0); 
     print.emptyline_Jcolor();        
-    print.genericPrint_Jcolor(player_4.start[2],player_4.start[3],c.BG_GAMEFIELD,c.BG_GAMEFIELD,GamefieldArray[30],GamefieldArray[29],GamefieldArray[28],c.BG_GAMEFIELD,c.BG_GAMEFIELD,player_3.start[2],player_3.start[3]);   
+    print.genericPrint_Jcolor(player_4.start[2],0,player_4.start[3],0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,GamefieldArray[30],30,GamefieldArray[29],29,GamefieldArray[28],28,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,player_3.start[2],0,player_3.start[3],0);   
     System.out.print("\n");
     print.printBorderBottom(); 
 }
