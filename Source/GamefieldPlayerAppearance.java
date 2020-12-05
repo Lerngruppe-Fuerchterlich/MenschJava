@@ -5,12 +5,12 @@
   Date:         24.11.2020
 ------------------------------------------------------*/
 
-import        com.diogonunes.jcolor.Ansi;
-import        com.diogonunes.jcolor.AnsiFormat;
-import        com.diogonunes.jcolor.Attribute;
-import static com.diogonunes.jcolor.Ansi.*;
-import static com.diogonunes.jcolor.Attribute.*;
-import static com.diogonunes.jcolor.AnsiFormat.*;
+import         com.diogonunes.jcolor.Ansi;
+import         com.diogonunes.jcolor.AnsiFormat;
+import         com.diogonunes.jcolor.Attribute;
+import static  com.diogonunes.jcolor.Ansi.*;
+import static  com.diogonunes.jcolor.Attribute.*;
+import static  com.diogonunes.jcolor.AnsiFormat.*;
 
 public class GamefieldPlayerAppearance{
   // Attributes -------------------------------
@@ -22,7 +22,7 @@ public class GamefieldPlayerAppearance{
   //Color   color    = WHITE;        
   AnsiFormat   color    = c.WHITE;        
   AnsiFormat[] target   = new AnsiFormat[] {c.BG_TARGET,c.BG_TARGET,c.BG_TARGET,c.BG_TARGET}; 
-  AnsiFormat[] start    = new AnsiFormat[] {c.BG_START,c.BG_START,c.BG_START,c.BG_START};
+  AnsiFormat[] start    = new AnsiFormat[] {c.BG_START, c.BG_START, c.BG_START, c.BG_START};
   // Attributes -------------------------------
   // Constructor ------------------------------
     GamefieldPlayerAppearance(AnsiFormat cl){

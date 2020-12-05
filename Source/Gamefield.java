@@ -97,10 +97,10 @@ public class Gamefield {
         player_3.start[i]  = c.GRAY;
         player_4.start[i]  = c.GRAY;
       
-        player_1.target[i] = c.GRAY_T;
-        player_2.target[i] = c.GRAY_T;
-        player_3.target[i] = c.GRAY_T;
-        player_4.target[i] = c.GRAY_T;
+        player_1.target[i] = c.RED_T_LIGHT;
+        player_2.target[i] = c.BLUE_T_LIGHT;
+        player_3.target[i] = c.YELLOW_T_LIGHT;
+        player_4.target[i] = c.GREEN_T_LIGHT;
       }
       for (int i = 0; i < 40; i++) {GamefieldArray[i] = c.BG_FIELD;}
     }
