@@ -9,14 +9,13 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.invoke.StringConcatFactory;
 
 // Hauptspielverzeichnis
 public class mainGame {
 
   public static void main(String[] args) throws IOException{
     // Attributes -------------------------------
-    // int [] testArr1 = new int[] {1,3,5,7}; 
-    // int [] testArr2 = new int[] {-1,-1,42,10};
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));   // String Input Reader
     Player[] Player = new Player[4]; // Spieler
     Piece[] Piece = new Piece[4];   // Figuren
@@ -41,12 +40,11 @@ public class mainGame {
 
     System.out.println("Das Spiel beginnt. Viel Erfolg!");     
     Gamefield gamefield = new Gamefield(numOfPlayers);
-    //gamefield.resetGamefield(); // Spielfeldreset, alle Figuren entfernen, alle Felder weiß
     gamefield.show();           // Anzeigen des Spielfeldes
     //gamefield.setPlayerPosition(1,testArr1);  // Aktualisieren der Figurpositionen Spieler 1
     //gamefield.setPlayerPosition(2,testArr2);  // Aktualisieren der Figurpositionen Spieler 2
     //gamefield.show(testArr1, testArr1, testArr2, testArr2); // Anzeigen + aktualisieren des Spielfeldes für alle Spieler
-    
+  
     // Initiiere Spielvariablen
     boolean gameFinished = false;                           // Bool'sche Variable zur Überprüfung, ob das Spiel beendet ist
     int curPlayer = 0;                                      // Spielerlaufvariable
@@ -57,11 +55,12 @@ public class mainGame {
     int cntDice;                                            // Würfelzahl
     boolean InputCheck;                                     // Prüfen der Spielereingabe
     boolean[] InitRollDice = {true, true, true, true};      // Initiales Würfeln (3 Versuche wenn keine Spieler im Feld)
+    int curPiece;
     
     // Starte Spielroutine
     do{
       // Spielroutine, initialer Start + Wahl nächster Spieler
-      if (gameRoutineStart == false){
+      if (gameRoutineStart == false){        
         curPlayer = 0;
         gameRoutineStart = true;
       }
@@ -74,6 +73,7 @@ public class mainGame {
           curPlayer = oldPlayer + 1;
         }
       }
+      System.out.println("Aktueller Spieler: " + curPlayer);
 
       // Spieler ist am Zug
       curPlayerName = Player[curPlayer].getPlayerName();
@@ -81,19 +81,23 @@ public class mainGame {
       // Hier fehlt die Abfrage, ob alle Figuren in der Basis sind, damit 3 Mal gewürfelt werden kann.
       InitRollDice[curPlayer] = CheckBase(Piece[curPlayer], InitRollDice[curPlayer]);
       //cntDice = RollDice(Player[curPlayer], InitRollDice[curPlayer]);
-      cntDice = 6;
+      cntDice = 6;  // ##### TEST #####
       if(cntDice != 0){
         outPiecePositions(Player[curPlayer], Piece[curPlayer]);
         System.out.println("Wählen Sie eine Figur.");
-        do{
+
+        do{ // Prüfen ob eine korrekte Eingabe erfolgt ist
           strContainer = br.readLine();
-          InputCheck = checkPiecePosition(strContainer, Piece[curPlayer], cntDice);
+          InputCheck = checkPiecePosition(strContainer, Piece[curPlayer], cntDice, Player[curPlayer]);
         }while(InputCheck != true);
-        updatePiecePositions(strContainer, Piece[curPlayer], cntDice);
-        checkEnemies(Piece, numOfPlayers, curPlayer);
-        outPiecePositions(Player[curPlayer], Piece[curPlayer]);
-        br.readLine();
-        gamefield.setPlayerPosition(curPlayer + 1, Piece[curPlayer].getPiecePositions());  // Update Spielfeld
+        curPiece = Integer.parseInt(strContainer) - 1;
+
+        updatePiecePositions(curPiece, Piece[curPlayer], cntDice);    // Aktualisieren der Spielerposition
+
+        //checkEnemies(Piece, numOfPlayers, curPlayer, Player);   // Prüfen ob gegnerische Figuren auf der aktualisierten Position sind
+
+        updatePieceGamefield(curPlayer, curPiece, Piece[curPlayer], Player[curPlayer], gamefield);
+        //clrTerminal();
         gamefield.show();
       }
     }while (gameFinished != true);
@@ -198,9 +202,10 @@ public class mainGame {
   }
 
   // Prüfen ob Figur bewegt werden kann
-  public static boolean checkPiecePosition(String strPiece, Piece Piece, int cntDice){
+  public static boolean checkPiecePosition(String strPiece, Piece Piece, int cntDice, Player Player){
     int[] curPiecePosition = Piece.getPiecePositions();
     int numPiece;
+    int offset = Player.getOffset();
 
     // Prüfen ob eine korrekte Figur ausgewählt wurde
     if(strPiece.equals("1")){
@@ -226,6 +231,13 @@ public class mainGame {
       return false;
     }
     else if(curPiecePosition[numPiece] == -1 && cntDice == 6){
+      // Abfrage, ob sich auf dem Startfeld bereits eine Figur befindet
+      for(int i = 0; i < 4; i++){
+        if (curPiecePosition[i] == offset){
+          System.out.println("Sie können keine Neue Figur auf das Feld holen. Sie haben bereits dort eine Figur platziert.");
+          return false;
+        }
+      }
       return true;
     }
 
@@ -252,22 +264,27 @@ public class mainGame {
   }
 
   // Aktualisierung der Figurposition
-  public static void updatePiecePositions(String strPiece, Piece Piece, int cntDice){
-    int numPiece = Integer.parseInt(strPiece) - 1;
-    Piece.setPiecePosition(numPiece, cntDice);
+  public static void updatePiecePositions(int curPiece, Piece Piece, int cntDice){
+    Piece.setPiecePosition(curPiece, cntDice);
   }
 
-  // Prüfen ob gegnerische Figuren auf der aktualisierten Position sind.
-  public static void checkEnemies(Piece[] Piece, int numOfPlayers, int curPlayer){
+  // Prüfen ob gegnerische Figuren auf der aktualisierten Position sind. ### AKTUELL NICHT IN BENUTZUNG, DA NOCH NICHT FERTIG! ###
+  public static void checkEnemies(Piece[] Piece, int numOfPlayers, int curPlayer, Player[] Player){
     int[] curPlayerPiecePositions = Piece[curPlayer].getPiecePositions();
-    int[] enemyPlayerPiecePositions = new int[4];
-    
+    int[] enemyPlayerPiecePositions = new int[numOfPlayers];
+    int[] offset = new int[numOfPlayers];
+
+    for(int i = 0; i < (numOfPlayers- 1); i++){
+      offset[i] = Player[i].getOffset();
+    }
+
+    // BENÖTIGT UPDATE DA SPIELÜBERLAUF Position > 39 NICHT BERÜCKSICHTIGT!
     for (int i = 0; i < numOfPlayers; i++){ // Routine zum Durchlauf aller Figuren
       if(i != curPlayer){
         enemyPlayerPiecePositions = Piece[i].getPiecePositions(); //  Überschreiben der gegnerischen Position
         for (int k = 0; k < 4; k++){
           for(int l = 0; l < 4; l++){
-            if(curPlayerPiecePositions[k] == enemyPlayerPiecePositions[l]){
+            if((curPlayerPiecePositions[k] + offset[k]) == (enemyPlayerPiecePositions[l] + offset[l]) && curPlayerPiecePositions[k] != -1 && enemyPlayerPiecePositions[l] != -1){
               Piece[l].resetPiecePosition(l); // Liegt eine gegnerische Figur auf dem Platz erfolgt ein Figurpositionsreset auf Position "-1"
               return; // Interrupt, damit keine weiteren Figurpositionen resettet werden
             }
@@ -275,6 +292,31 @@ public class mainGame {
         }
       }
     }
+  }
+
+  // Aktualisieren des Spielfeldes
+  public static void updatePieceGamefield(int curPlayer, int curPiece, Piece Piece, Player Player, Gamefield gamefield){
+    int[] curPiecePosition = Piece.getPiecePositions();
+    int curPlayerOffset = Player.getOffset();
+
+    System.out.println(curPiecePosition[0] + " | " + curPiecePosition[1] + " | " + curPiecePosition[2] + " | " + curPiecePosition[3]);
+
+    // Anpassen der Spielfeldpositionen auf absolute Werte und nicht relativ zum Spieler
+    if(curPiecePosition[curPiece] <= 39){  // Spielfeld besitzt 39 Spielfelder (Ohne Zielfelder)
+      if((curPiecePosition[curPiece] + curPlayerOffset) > 39 ){
+        curPiecePosition[curPiece] = (curPiecePosition[curPiece] + curPlayerOffset) - 39;
+      }
+      else{
+        curPiecePosition[curPiece] = curPiecePosition[curPiece] + curPlayerOffset;
+      }
+    }
+    else{
+      // ##### Zielausgabe fehlt! #####
+    }
+    
+    System.out.println(curPiecePosition[0] + " | " + curPiecePosition[1] + " | " + curPiecePosition[2] + " | " + curPiecePosition[3]);
+    
+    gamefield.setPlayerPosition(curPlayer + 1, curPiecePosition);  // Update Spielfeld
   }
 
   // Methode zur Bereinigung der Console

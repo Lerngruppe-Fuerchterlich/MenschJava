@@ -29,7 +29,6 @@ public class Piece {
     }
     else{
       cntPiece[numPiece] = CurPosition + cntDice;
-      System.out.println(CurPosition + " | " + cntDice);
     }
   }
 
