@@ -24,7 +24,13 @@ public class Piece {
     int CurPosition;
 
     CurPosition = cntPiece[numPiece];
-    cntPiece[numPiece] = CurPosition + cntDice;
+    if (CurPosition == -1){
+      cntPiece[numPiece] = 0;
+    }
+    else{
+      cntPiece[numPiece] = CurPosition + cntDice;
+      System.out.println(CurPosition + " | " + cntDice);
+    }
   }
 
   public void resetPiecePosition(int numPiece){

@@ -15,8 +15,8 @@ public class mainGame {
 
   public static void main(String[] args) throws IOException{
     // Attributes -------------------------------
-    int [] testArr1 = new int[] {1,3,5,7}; 
-    int [] testArr2 = new int[] {-1,-1,42,10};
+    // int [] testArr1 = new int[] {1,3,5,7}; 
+    // int [] testArr2 = new int[] {-1,-1,42,10};
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));   // String Input Reader
     Player[] Player = new Player[4]; // Spieler
     Piece[] Piece = new Piece[4];   // Figuren
@@ -48,14 +48,15 @@ public class mainGame {
     //gamefield.show(testArr1, testArr1, testArr2, testArr2); // Anzeigen + aktualisieren des Spielfeldes für alle Spieler
     
     // Initiiere Spielvariablen
-    boolean gameFinished = false;     // Bool'sche Variable zur Überprüfung, ob das Spiel beendet ist
-    int curPlayer = 0;                // Spielerlaufvariable
-    int oldPlayer;                    // Alter Spieler
-    String curPlayerName;             // Spielername
-    String strContainer = "";         // String Container (Dynamische Benutzereingabe)
-    boolean gameRoutineStart = false; // Spielroutine, initialer Start
-    int cntDice;                      // Würfelzahl
-    boolean InputCheck;               // Prüfen der Spielereingabe
+    boolean gameFinished = false;                           // Bool'sche Variable zur Überprüfung, ob das Spiel beendet ist
+    int curPlayer = 0;                                      // Spielerlaufvariable
+    int oldPlayer;                                          // Alter Spieler
+    String curPlayerName;                                   // Spielername
+    String strContainer = "";                               // String Container (Dynamische Benutzereingabe)
+    boolean gameRoutineStart = false;                       // Spielroutine, initialer Start
+    int cntDice;                                            // Würfelzahl
+    boolean InputCheck;                                     // Prüfen der Spielereingabe
+    boolean[] InitRollDice = {true, true, true, true};      // Initiales Würfeln (3 Versuche wenn keine Spieler im Feld)
     
     // Starte Spielroutine
     do{
@@ -66,7 +67,7 @@ public class mainGame {
       }
       else{
         oldPlayer = curPlayer;
-        if(oldPlayer == numOfPlayers){
+        if(oldPlayer == numOfPlayers - 1){
           curPlayer = 0;
         }
         else{
@@ -76,26 +77,29 @@ public class mainGame {
 
       // Spieler ist am Zug
       curPlayerName = Player[curPlayer].getPlayerName();
-      System.out.println("\nSpieler '" + curPlayerName + "' ist am Zug!\nWürfeln Sie indem Sie eine beliebige Taste drücken...");
+      System.out.println("\nSpieler '" + curPlayerName + "' ist am Zug!");
       // Hier fehlt die Abfrage, ob alle Figuren in der Basis sind, damit 3 Mal gewürfelt werden kann.
-      br.readLine();
-      //cntDice = Player[curPlayer].roll_dice();
-      cntDice = 6;  // #### TEST ####
-      System.out.println("Sie haben eine " + cntDice + " gewürfelt. Aktuell befinden sich Ihre Figuren auf nachfolgenden Positionen:");
-      outPiecePositions(Player[curPlayer], Piece[curPlayer]);
-      System.out.println("Welche Figur möchten Sie auf dem Spielfeld verrücken?");
-      do{
-        strContainer = br.readLine();
-        InputCheck = checkPiecePosition(strContainer, Piece[curPlayer], cntDice);
-      }while(InputCheck != true);
-      updatePiecePositions(strContainer, Piece[curPlayer], cntDice);
-      checkEnemies(Piece, numOfPlayers, curPlayer);
-      gamefield.setPlayerPosition(1, Piece[curPlayer].getPiecePositions());  // Update Spielfeld
+      InitRollDice[curPlayer] = CheckBase(Piece[curPlayer], InitRollDice[curPlayer]);
+      //cntDice = RollDice(Player[curPlayer], InitRollDice[curPlayer]);
+      cntDice = 6;
+      if(cntDice != 0){
+        outPiecePositions(Player[curPlayer], Piece[curPlayer]);
+        System.out.println("Wählen Sie eine Figur.");
+        do{
+          strContainer = br.readLine();
+          InputCheck = checkPiecePosition(strContainer, Piece[curPlayer], cntDice);
+        }while(InputCheck != true);
+        updatePiecePositions(strContainer, Piece[curPlayer], cntDice);
+        checkEnemies(Piece, numOfPlayers, curPlayer);
+        outPiecePositions(Player[curPlayer], Piece[curPlayer]);
+        br.readLine();
+        gamefield.setPlayerPosition(curPlayer + 1, Piece[curPlayer].getPiecePositions());  // Update Spielfeld
+        gamefield.show();
+      }
     }while (gameFinished != true);
     br.readLine();  // Verhindern, dass cmd-Window geschlossen wird.
   }
   
-  // ############################################################################################################################
   // ############################################################################################################################
 
   // Abfrage der Spieleranzahl
@@ -127,12 +131,57 @@ public class mainGame {
     return numPlayers;
   }
 
+  // Spieler Würfeln
+  public static int RollDice(Player Player, boolean InitRollDice) throws IOException{
+    int cntDice = 0;
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));   // String Input Reader
+
+    if (InitRollDice == true){
+      System.out.println("Würfeln Sie indem Sie eine beliebige Taste drücken...");
+      for(int i = 0; i < 3; i++){
+        br.readLine();
+        cntDice = Player.roll_dice();
+        if(cntDice == 6 && i < 3){
+          System.out.println("Sie haben eine " + cntDice + " gewürfelt. Sie dürfen eine Figur auf das Spielfeld rücken.");
+          return cntDice;
+        }
+        else if (i < 2){
+          System.out.println("Sie haben eine " + cntDice + " gewürfelt. Versuchen Sie es erneut.");
+        }
+        else if (i < 3){
+          System.out.println("Sie haben eine " + cntDice + " gewürfelt. Sie  haben keine freien Versuche mehr.");
+          return 0;
+        }
+      }
+    }
+    else{ 
+      System.out.println("Würfeln Sie indem Sie eine beliebige Taste drücken...");
+      br.readLine();
+      cntDice = Player.roll_dice();
+      System.out.println("Sie haben eine " + cntDice + " gewürfelt.");
+    }
+    return cntDice;
+  }
+
+  // Prüfen ob eigene Basis voll ist
+  public static boolean CheckBase(Piece Piece, boolean InitRollDice){
+    int[] curPlayerPieces = Piece.getPiecePositions();
+
+    for (int i = 0; i <= 3; i++){
+      if (curPlayerPieces[i] != -1){
+        return false;
+      }
+    }
+    return true;
+  }
+
   // Ausgabe Figurpositionen
   public static void outPiecePositions(Player Player, Piece Piece){
     int[] cntPiece = Piece.getPiecePositions();
     int offset = Player.getOffset();
     String[] strPiecePosition = new String[4];
-
+    
+    System.out.println("Ihre Figuren befinden sich an nachfolgenden Positionen.");
     for(int i = 0; i <= 3; i++){
       if(cntPiece[i] == -1){
         strPiecePosition[i] = "Basis";
@@ -155,17 +204,16 @@ public class mainGame {
 
     // Prüfen ob eine korrekte Figur ausgewählt wurde
     if(strPiece.equals("1")){
-      numPiece = Integer.parseInt(strPiece);
+      numPiece = Integer.parseInt(strPiece) - 1;
     }
-    else if(strPiece == "2"){
-      numPiece = Integer.parseInt(strPiece);
-
+    else if(strPiece.equals("2")){
+      numPiece = Integer.parseInt(strPiece) - 1;
     }
-    else if(strPiece == "3"){
-      numPiece = Integer.parseInt(strPiece);
+    else if(strPiece.equals("3")){
+      numPiece = Integer.parseInt(strPiece) - 1;
     }
-    else if(strPiece == "4"){
-      numPiece = Integer.parseInt(strPiece);
+    else if(strPiece.equals("4")){
+      numPiece = Integer.parseInt(strPiece) - 1;
     }
     else{
       System.out.println("Ihre Eingabe ist nicht korrekt. Bitte wählen Sie eine korrekte Figur.");
@@ -205,7 +253,7 @@ public class mainGame {
 
   // Aktualisierung der Figurposition
   public static void updatePiecePositions(String strPiece, Piece Piece, int cntDice){
-    int numPiece = Integer.parseInt(strPiece);
+    int numPiece = Integer.parseInt(strPiece) - 1;
     Piece.setPiecePosition(numPiece, cntDice);
   }
 
@@ -214,14 +262,14 @@ public class mainGame {
     int[] curPlayerPiecePositions = Piece[curPlayer].getPiecePositions();
     int[] enemyPlayerPiecePositions = new int[4];
     
-    for (int i = 0; i < numOfPlayers; i++){
-      enemyPlayerPiecePositions = Piece[i].getPiecePositions();
+    for (int i = 0; i < numOfPlayers; i++){ // Routine zum Durchlauf aller Figuren
       if(i != curPlayer){
+        enemyPlayerPiecePositions = Piece[i].getPiecePositions(); //  Überschreiben der gegnerischen Position
         for (int k = 0; k < 4; k++){
           for(int l = 0; l < 4; l++){
             if(curPlayerPiecePositions[k] == enemyPlayerPiecePositions[l]){
-              Piece[l].resetPiecePosition(l);
-              return;
+              Piece[l].resetPiecePosition(l); // Liegt eine gegnerische Figur auf dem Platz erfolgt ein Figurpositionsreset auf Position "-1"
+              return; // Interrupt, damit keine weiteren Figurpositionen resettet werden
             }
           }
         }
