@@ -47,21 +47,22 @@ public class GamefieldPlayerAppearance{
         position[3] = -42;
     }   
   
-    void placeOnGamefield (AnsiFormat [] GamefieldArray) {
+    void placeOnGamefield (AnsiFormat [] GamefieldArray, int [] GamefieldNo) {
     // Set Position as Offset - Free Value:
      // 0-39 is field
      // -1 start field
      // 40-43 target field
-     for (i = 0; i < 4; i++) {
-        if (position[i] >= 0) {                                              
-          if (position[i] <=39)      
+     for (i = 0; i < 4; i++) {                                  // Loop through all players
+        if (position[i] >= 0) {                                 // -> Player not at startfield             
+          if (position[i] <=39) {                               // -> Player in Gamefield
                GamefieldArray [     position[i]] = color;
-          else target         [43 - position[i]] = color;  
+               GamefieldNo    [     position[i]] = i+1;
+          }  else target         [43 - position[i]] = color;    // -> Player in target field
         } else { 
-          if (position[i] == -42) {   // deactiviated players
+          if (position[i] == -42) {                             // -> deactiviated players
                  start [i] = c.BG_START;    
                  target[i] = c.BG_TARGET;
-          } else start [i] = color;
+          } else start [i] = color;                             // -> Player at startfield
         }
     }
   }
