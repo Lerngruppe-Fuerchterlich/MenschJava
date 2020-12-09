@@ -285,18 +285,14 @@ public class mainGame {
   public static void updatePieceGamefield(int curPlayer, int curPiece, Piece Piece, Player Player, Gamefield gamefield){
     int[] curPiecePosition = Piece.getPiecePositions();
     int   curPlayerOffset  = Player.getOffset();
-    
-    //System.out.println(curPiecePosition[0] + " | " + curPiecePosition[1] + " | " + curPiecePosition[2] + " | " + curPiecePosition[3]);
 
     
     if(curPiecePosition[curPiece] <= 39){  // Spielfeld besitzt 39 Spielfelder (Ohne Zielfelder)
-      
+      // ##### Leer #####
     }
     else{
       // ##### Zielausgabe fehlt! #####
     }
-    
-    //System.out.println(curPiecePosition[0] + " | " + curPiecePosition[1] + " | " + curPiecePosition[2] + " | " + curPiecePosition[3]);
     
     gamefield.setPlayerPosition(curPlayer + 1, curPiecePosition);  // Update Spielfeld
   }
