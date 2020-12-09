@@ -17,7 +17,7 @@ public class GamefieldPrinter {
   //Color[] printArray = new Color[11];                           
   AnsiFormat[]    printArray_Jcolor = new AnsiFormat[11];
   int[]           numberArr         = new int[11];
-  GamefieldElement elem = new GamefieldElement()[11];
+  //GamefieldElement elem = new GamefieldElement()[11];
   GamefieldColors c     = new GamefieldColors();
   
   String border_right  = " +";  
@@ -60,13 +60,14 @@ public class GamefieldPrinter {
     skipfieldspacing();
   }
 
-  void genericPrint (GamefieldElement [][] element){
+  /*void genericPrint (GamefieldElement [][] element){
+    int i = 0;
     System.out.print("\n");
     skipfieldspacing();
     for (i = 0 ; i < element.length; i++) {
       printLine (element[i][]);
     }
-  } 
+  } */
 
   void printLine_Jcolor (AnsiFormat [] array, int [] numberArray) {
     for (int i = 0; i < array.length; i++) {
@@ -80,7 +81,7 @@ public class GamefieldPrinter {
     for (int i = 0; i < element.length; i++) {
       if (element[i].fieldColor != c.BG_GAMEFIELD) fig_Jcolor(element[i].fieldColor, element[i].fieldNumber);
       else                                         skipfieldspacing();
-      if (i != array.length-1) spacing();
+      if (i != element.length-1) spacing();
     }
    }
   

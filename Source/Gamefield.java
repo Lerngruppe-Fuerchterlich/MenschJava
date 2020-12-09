@@ -20,7 +20,7 @@ public class Gamefield {
     static int i = 0;                                                  // Counter 
     AnsiFormat[]      GamefieldArray = new AnsiFormat[40];             // Gamefield position array
     int[]             GamefieldNo    = new int[40];                    // Gamefield position array
-    GamefieldElement  element        = new GamefieldElement()[11][11];
+    //GamefieldElement  element        = new GamefieldElement()[11][11];
     static int        numberOfPlayers  = 0;                            // Absolute number of players
    
   // -> other classes  
@@ -145,7 +145,7 @@ public class Gamefield {
 
     System.out.print("\n\n\n");
     print.printBorderTop();
-    print.genericPrint(element); 
+    //print.genericPrint(element); 
 
   }
   // Methods ----------------------------------

@@ -19,13 +19,13 @@ public class GamefieldElement {
 
     GamefieldElement () {}
 
-    setGamefieldElement (AnsiFormat color) {
+    /*setGamefieldElement (AnsiFormat color) {
         fieldColor = color;
         fieldNumber = 0;
     }
     setGamefieldElement (AnsiFormat color, int number) {
         fieldColor = color;
         fieldNumber = number;
-    }
+    }*/
 
 }
