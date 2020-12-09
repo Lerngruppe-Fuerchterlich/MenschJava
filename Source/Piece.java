@@ -19,16 +19,16 @@ public class Piece {
   }
   // Methods ----------------------------------
   // Setze Position der bewegten Figur
-  public void setPiecePosition(int numPiece, int cntDice){
+  public void setPiecePosition(int numPiece, int cntDice, int offset){
     // Variablen
     int CurPosition;
 
     CurPosition = cntPiece[numPiece];
     if (CurPosition == -1){
-      cntPiece[numPiece] = 0;
+      cntPiece[numPiece] = offset;                // Aus dem Haus raus -> auf Start Position
     }
     else{
-      cntPiece[numPiece] = CurPosition + cntDice;
+      cntPiece[numPiece] = CurPosition + cntDice; // Sonst -> Augenzahl gehen
     }
   }
 
