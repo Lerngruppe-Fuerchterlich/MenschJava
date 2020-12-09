@@ -17,15 +17,18 @@ public class Gamefield {
   // -> own
 
     // Others
-    static int i = 0;                                   // Counter 
-    AnsiFormat[] GamefieldArray = new AnsiFormat[40];   // Gamefield position array
-    int[]        GamefieldNo    = new int[40];       // Gamefield position array
-    static int numberOfPlayers  = 0;                    // Absolute number of players
+    static int i = 0;                                                  // Counter 
+    AnsiFormat[]      GamefieldArray = new AnsiFormat[40];             // Gamefield position array
+    int[]             GamefieldNo    = new int[40];                    // Gamefield position array
+    GamefieldElement  element        = new GamefieldElement()[11][11];
+    static int        numberOfPlayers  = 0;                            // Absolute number of players
    
   // -> other classes  
+
     // Class for generation of beautiful console interface                                
     GamefieldPrinter print             = new GamefieldPrinter();
     GamefieldColors c                  = new GamefieldColors();
+
     // Class for default player appearance on gamefield                   
     GamefieldPlayerAppearance player_1 = new GamefieldPlayerAppearance    (c.RED_T); 
     GamefieldPlayerAppearance player_2 = new GamefieldPlayerAppearance   (c.BLUE_T);
@@ -139,7 +142,12 @@ public class Gamefield {
     print.genericPrint_Jcolor(player_4.start[2],0,player_4.start[3],0,c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,GamefieldArray[30],GamefieldNo[30],GamefieldArray[29],GamefieldNo[29],GamefieldArray[28],GamefieldNo[28],c.BG_GAMEFIELD,0,c.BG_GAMEFIELD,0,player_3.start[2],0,player_3.start[3],0);   
     System.out.print("\n");
     print.printBorderBottom(); 
-}
+
+    System.out.print("\n\n\n");
+    print.printBorderTop();
+    print.genericPrint(element); 
+
+  }
   // Methods ----------------------------------
   
 }

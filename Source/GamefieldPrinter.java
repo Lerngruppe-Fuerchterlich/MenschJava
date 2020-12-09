@@ -15,9 +15,10 @@ import static com.diogonunes.jcolor.AnsiFormat.*;
 public class GamefieldPrinter {
   // Attributes -------------------------------                             
   //Color[] printArray = new Color[11];                           
-  AnsiFormat[] printArray_Jcolor = new AnsiFormat[11];
-  int[]        numberArr         = new int[11];
-  GamefieldColors c = new GamefieldColors();
+  AnsiFormat[]    printArray_Jcolor = new AnsiFormat[11];
+  int[]           numberArr         = new int[11];
+  GamefieldElement elem = new GamefieldElement()[11];
+  GamefieldColors c     = new GamefieldColors();
   
   String border_right  = " +";  
   String border_left   = " + ";
@@ -54,15 +55,31 @@ public class GamefieldPrinter {
     skipfieldspacing();
     setNumberArr       (n1, n2, n3, n4, n5, n6 ,n7, n8, n9, n10, n11);
     setPrintArr_Jcolor (p1j,p2j,p3j,p4j,p5j,p6j,p7j,p8j,p9j,p10j,p11j);
-    printLine_Jcolor(printArray_Jcolor, numberArr);       
+    printLine_Jcolor   (printArray_Jcolor, numberArr);       
     //System.out.print(border_right);
     skipfieldspacing();
   }
+
+  void genericPrint (GamefieldElement [][] element){
+    System.out.print("\n");
+    skipfieldspacing();
+    for (i = 0 ; i < element.length; i++) {
+      printLine (element[i][]);
+    }
+  } 
 
   void printLine_Jcolor (AnsiFormat [] array, int [] numberArray) {
     for (int i = 0; i < array.length; i++) {
       if (array[i] != c.BG_GAMEFIELD) fig_Jcolor(array[i], numberArray[i]);
       else                   skipfieldspacing();
+      if (i != array.length-1) spacing();
+    }
+   }
+   
+   void printLine (GamefieldElement [] element) {
+    for (int i = 0; i < element.length; i++) {
+      if (element[i].fieldColor != c.BG_GAMEFIELD) fig_Jcolor(element[i].fieldColor, element[i].fieldNumber);
+      else                                         skipfieldspacing();
       if (i != array.length-1) spacing();
     }
    }

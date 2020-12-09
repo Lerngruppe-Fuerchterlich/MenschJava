@@ -90,7 +90,7 @@ public class mainGame {
         do { // Prüfen ob eine korrekte Eingabe erfolgt ist
           strContainer = br.readLine();
           curPiece     = Integer.parseInt(strContainer) - 1;
-          InputCheck   = checkPiecePosition(curPiece/*strContainer*/, Piece[curPlayer], cntDice, Player[curPlayer]);
+          InputCheck   = checkPiecePosition(curPiece, Piece[curPlayer], cntDice, Player[curPlayer]);
         } while (InputCheck != true);
         
         updatePiecePositions(curPiece, Piece[curPlayer], cntDice,Player[curPlayer]);    // Aktualisieren der Spielerposition
@@ -116,8 +116,6 @@ public class mainGame {
     int     numPlayers = 0;
     String  strContainer = "";
     boolean bCompare = false;
-
-    //bCompare = false; Kann weg, oder???
     
     System.out.print("Bitte gebe die Anzahl der Spieler ein (2-4 Spieler): ");
     
@@ -142,7 +140,7 @@ public class mainGame {
 
   // Spieler Würfeln
   public static int RollDice(Player Player, boolean InitRollDice) throws IOException{
-    
+
     int            cntDice = 0;
     BufferedReader br      = new BufferedReader(new InputStreamReader(System.in));   // String Input Reader
 
@@ -195,41 +193,21 @@ public class mainGame {
         strPiecePosition[i] = "Basis";
       }
       else if(cntPiece[i] > -1 && cntPiece[i] <= 39){
-       // cntPiece[i] = cntPiece[i] + offset; war doppelt. Kann weg. Ok?
         if (cntPiece[i] > 39){
           cntPiece[i] = cntPiece[i] - 39;
         }
         strPiecePosition[i] = String.valueOf(cntPiece[i]);
       }
     }
-    System.out.println(strPiecePosition[0] + " | " + strPiecePosition[1] + " | " + strPiecePosition[2] + " | " + strPiecePosition[3]);
+    //System.out.println(strPiecePosition[0] + " | " + strPiecePosition[1] + " | " + strPiecePosition[2] + " | " + strPiecePosition[3]);
   }
 
   // Prüfen ob Figur bewegt werden kann
-  public static boolean checkPiecePosition(int numPiece /*String strPiece*/, Piece Piece, int cntDice, Player Player){
+  public static boolean checkPiecePosition(int numPiece, Piece Piece, int cntDice, Player Player){
     int[] curPiecePosition = Piece.getPiecePositions();
     //int numPiece;
     int offset = Player.getOffset();
 
-    // Ich habe den String durch einen integer ersetzt und damit ein paar Zeilen code eleminiert. Ok?
-
-    /* Prüfen ob eine korrekte Figur ausgewählt wurde 
-    if(strPiece.equals("1")){
-      numPiece = Integer.parseInt(strPiece) - 1;
-    }
-    else if(strPiece.equals("2")){
-      numPiece = Integer.parseInt(strPiece) - 1;
-    }
-    else if(strPiece.equals("3")){
-      numPiece = Integer.parseInt(strPiece) - 1;
-    }
-    else if(strPiece.equals("4")){
-      numPiece = Integer.parseInt(strPiece) - 1;
-    }
-    else{
-      System.out.println("Ihre Eingabe ist nicht korrekt. Bitte wählen Sie eine korrekte Figur.");
-      return false;
-    }*/
     if (numPiece < 0 || numPiece > 3) {
       System.out.println("Ihre Eingabe ist nicht korrekt. Bitte wählen Sie eine korrekte Figur.");
       return false;
@@ -312,14 +290,7 @@ public class mainGame {
 
     
     if(curPiecePosition[curPiece] <= 39){  // Spielfeld besitzt 39 Spielfelder (Ohne Zielfelder)
-      // War doppelt und kann weg..
-      // Anpassen der Spielfeldpositionen auf absolute Werte und nicht relativ zum Spieler
-      /*if((curPiecePosition[curPiece] + curPlayerOffset) > 39 ){
-        curPiecePosition[curPiece] = (curPiecePosition[curPiece] + curPlayerOffset) - 39;
-      }
-      else{
-        curPiecePosition[curPiece] = curPiecePosition[curPiece] + curPlayerOffset;
-      }*/
+      
     }
     else{
       // ##### Zielausgabe fehlt! #####
