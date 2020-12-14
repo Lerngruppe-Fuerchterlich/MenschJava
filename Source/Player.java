@@ -45,7 +45,7 @@ public class Player {
   
   // Würfeln
   int roll_dice() {
-    Random rnd = new Random();
+    Random rnd = new Random();      // #### Prüfen, ob korrekt implementiert. Gegebenenfalls im Konstruktor definieren. ####
     int cntEyes = rnd.nextInt(6);   // Zufallszahl zwischen 0 und 5 -> 6 Werte
     cntEyes = cntEyes + 1;      // Augenzahl zwischen 1 und 6.
     return cntEyes;

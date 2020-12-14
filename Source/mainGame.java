@@ -21,9 +21,9 @@ public class mainGame {
 
   public static void main(String[] args) throws IOException{
 
-    BufferedReader br     = new BufferedReader(new InputStreamReader(System.in));   // String Input Reader
     Player[]       Player = new Player[4];  // Spieler
     Piece[]        Piece  = new Piece[4];   // Figuren
+    BufferedReader br     = new BufferedReader(new InputStreamReader(System.in));   // String Input Reader
 
     // Initiiere Spielvariablen
     boolean   gameFinished = false;                           // Bool'sche Variable zur Überprüfung, ob das Spiel beendet ist
@@ -72,7 +72,6 @@ public class mainGame {
         if (oldPlayer == numOfPlayers - 1) curPlayer = 0; 
         else                               curPlayer = oldPlayer + 1;
       }
-      System.out.println("\n\nAktueller Spieler: " + curPlayer);
 
       // Spieler ist am Zug
       curPlayerName = Player[curPlayer].getPlayerName();
@@ -89,19 +88,29 @@ public class mainGame {
         
         do { // Prüfen ob eine korrekte Eingabe erfolgt ist
           strContainer = br.readLine();
-          curPiece     = Integer.parseInt(strContainer) - 1;
-          InputCheck   = checkPiecePosition(curPiece, Piece[curPlayer], cntDice, Player[curPlayer]);
+          if (strContainer.equals("1") || strContainer.equals("2") || strContainer.equals("3") || strContainer.equals("4")){
+            curPiece     = Integer.parseInt(strContainer) - 1;
+            InputCheck   = checkPiecePosition(curPiece, Piece[curPlayer], cntDice, Player[curPlayer]);
+          }
+          else{
+            System.out.println("Ihre Eingabe ist nicht korrekt. Bitte wählen Sie eine korrekte Figur.");
+            curPiece = -1;
+            InputCheck = false;
+          }
+
         } while (InputCheck != true);
         
         updatePiecePositions(curPiece, Piece[curPlayer], cntDice,Player[curPlayer]);    // Aktualisieren der Spielerposition
 
-        //checkEnemies(Piece, numOfPlayers, curPlayer, Player);   // Prüfen ob gegnerische Figuren auf der aktualisierten Position sind
+        checkEnemies(Piece, numOfPlayers, curPlayer, Player);   // Prüfen ob gegnerische Figuren auf der aktualisierten Position sind
 
         updatePieceGamefield(curPlayer, curPiece, Piece[curPlayer], Player[curPlayer], gamefield); // calc with offset
         
         clrTerminal();
 
         gamefield.show();
+
+
       }
     }while (gameFinished != true);
     // Spielroutine ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -124,14 +133,15 @@ public class mainGame {
       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
       System.out.print("Anzahl Spieler: ");
       strContainer = br.readLine();
-      numPlayers = Integer.parseInt(strContainer);
+      
       // Auswerten User-Eingabe
-      if(numPlayers >= 2 && numPlayers <= 4) {
+      if(strContainer.equals("1") || strContainer.equals("2") || strContainer.equals("3") || strContainer.equals("4")) {
+        numPlayers = Integer.parseInt(strContainer);
         System.out.println("Das spiel wird mit " + numPlayers + " Spielern gespielt!");
         bCompare = true;
       }
       else {
-        System.out.println("Falsche Eingabe, bitte wiederholen Sie Ihre Eingabe. Eingabe: " + strContainer);
+        System.out.println("Falsche Eingabe, bitte wiederholen Sie Ihre Eingabe. Ausgeführte Eingabe: " + strContainer);
       } 
     } while (bCompare != true);
     
@@ -157,7 +167,7 @@ public class mainGame {
           System.out.println ("Sie haben eine " + cntDice + " gewürfelt. Versuchen Sie es erneut.");
         }
         else if (i < 3){
-          System.out.println ("Sie haben eine " + cntDice + " gewürfelt. Sie  haben keine freien Versuche mehr.");
+          System.out.println ("Sie haben eine " + cntDice + " gewürfelt. Sie  haben keine freien Versuche mehr.\nVersuchen Sie es in der nächsten Runde erneut.");
           return 0;
         }
       }
@@ -204,20 +214,10 @@ public class mainGame {
 
   // Prüfen ob Figur bewegt werden kann
   public static boolean checkPiecePosition(int numPiece, Piece Piece, int cntDice, Player Player){
-    int[] curPiecePosition = Piece.getPiecePositions();
-    //int numPiece;
-    int offset = Player.getOffset();
+    int[] curPiecePosition  = Piece.getPiecePositions();
+    int   offset            = Player.getOffset();
 
-    if (numPiece < 0 || numPiece > 3) {
-      System.out.println("Ihre Eingabe ist nicht korrekt. Bitte wählen Sie eine korrekte Figur.");
-      return false;
-    }
-    // Prüfen ob Figur sich noch in der Basis befindet und ob eine 6 gewürfelt wurde
-    if(curPiecePosition[numPiece] == -1 && cntDice != 6){
-      System.out.println("Ihre sich in der Basis befindliche Figur kann nicht auf das Spielfeld gerückt werden, da Sie keine '6' gewürfelt haben.");
-      return false;
-    }
-    else if(curPiecePosition[numPiece] == -1 && cntDice == 6){
+    if(curPiecePosition[numPiece] == -1 && cntDice == 6){
       // Abfrage, ob sich auf dem Startfeld bereits eine Figur befindet
       for(int i = 0; i < 4; i++){
         if (curPiecePosition[i] == offset){
@@ -255,10 +255,10 @@ public class mainGame {
     Piece.setPiecePosition(curPiece, cntDice, Player.getOffset());
   }
 
-  // Prüfen ob gegnerische Figuren auf der aktualisierten Position sind. ### AKTUELL NICHT IN BENUTZUNG, DA NOCH NICHT FERTIG! ###
+  // Prüfen ob gegnerische Figuren auf der aktualisierten Position sind.
   public static void checkEnemies(Piece[] Piece, int numOfPlayers, int curPlayer, Player[] Player){
     int[] curPlayerPiecePositions   = Piece[curPlayer].getPiecePositions();
-    int[] enemyPlayerPiecePositions = new int[numOfPlayers];
+    int[] enemyPlayerPiecePositions = new int[4];
     int[] offset                    = new int[numOfPlayers];
 
     for(int i = 0; i < (numOfPlayers- 1); i++){
