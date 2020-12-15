@@ -28,7 +28,13 @@ public class Piece {
       cntPiece[numPiece] = offset;                // Aus dem Haus raus -> auf Start Position
     }
     else{
-      cntPiece[numPiece] = CurPosition + cntDice; // Sonst -> Augenzahl gehen
+      if(CurPosition + cntDice <= 39){
+        cntPiece[numPiece] = CurPosition + cntDice; // Sonst -> Augenzahl gehen
+      }
+      else{
+        cntPiece[numPiece] = CurPosition + cntDice - 40;
+      }
+
     }
   }
 

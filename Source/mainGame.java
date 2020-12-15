@@ -100,9 +100,9 @@ public class mainGame {
 
         } while (InputCheck != true);
         
-        updatePiecePositions(curPiece, Piece[curPlayer], cntDice,Player[curPlayer]);    // Aktualisieren der Spielerposition
+        updatePiecePositions(curPiece, Piece[curPlayer], cntDice, curPlayer, Player[curPlayer]);    // Aktualisieren der Spielerposition
 
-        checkEnemies(Piece, numOfPlayers, curPlayer, Player);   // Prüfen ob gegnerische Figuren auf der aktualisierten Position sind
+        //checkEnemies(Piece, numOfPlayers, curPlayer, Player);   // Prüfen ob gegnerische Figuren auf der aktualisierten Position sind
 
         updatePieceGamefield(curPlayer, curPiece, Piece[curPlayer], Player[curPlayer], gamefield); // calc with offset
         
@@ -229,11 +229,11 @@ public class mainGame {
     }
 
     // Prüfen ob Figur die Anzahl der gewürfelten Felder gehen kann
-    if(curPiecePosition[numPiece] + cntDice > 43){  // Prüfen, ob gewählte Figur genug freie Schrittplätze besitzt
+    if(curPiecePosition[numPiece] + cntDice - offset > 43){  // Prüfen, ob gewählte Figur genug freie Schrittplätze besitzt
       System.out.println("Ihre Figur kann nicht auf die Position bewegt werden. Bitte wählen Sie eine andere Figur.");
       return false;
     }
-    else if(curPiecePosition[numPiece] + cntDice <= 43){  // Prüfen, ob die gewählte Position bereits von einer anderen eigenen Figur belegt ist
+    else if(curPiecePosition[numPiece] + cntDice - offset <= 43){  // Prüfen, ob die gewählte Position bereits von einer anderen eigenen Figur belegt ist
       for(int i = 0; i <= 3; i++){
         if(i != numPiece){
           if(curPiecePosition[i] == (curPiecePosition[numPiece] + cntDice)){
@@ -251,7 +251,15 @@ public class mainGame {
   }
 
   // Aktualisierung der Figurposition
-  public static void updatePiecePositions(int curPiece, Piece Piece, int cntDice, Player Player){
+  public static void updatePiecePositions(int curPiece, Piece Piece, int cntDice, int curPlayer, Player Player){
+    int[] curPiecePositions = new int[4];
+    int   offset            = 0;
+  
+    curPiecePositions = Piece.getPiecePositions();
+    offset            = Player.getOffset();
+
+    // #### setPiecePosition abhängig ob Figur auf Position kleiner 39 vorrückt oder bereits auf 40.
+
     Piece.setPiecePosition(curPiece, cntDice, Player.getOffset());
   }
 
@@ -268,13 +276,13 @@ public class mainGame {
     // BENÖTIGT UPDATE DA SPIELÜBERLAUF Position > 39 NICHT BERÜCKSICHTIGT!
     for (int i = 0; i < numOfPlayers; i++){ // Routine zum Durchlauf aller Figuren
       if(i != curPlayer){
-        enemyPlayerPiecePositions = Piece[i].getPiecePositions(); //  Überschreiben der gegnerischen Position
+        //enemyPlayerPiecePositions = Piece[i].getPiecePositions(); //  Überschreiben der gegnerischen Position
         for (int k = 0; k < 4; k++){
-          for(int l = 0; l < 4; l++){
+          for(int l = 0; l < 4; l++){/*
             if((curPlayerPiecePositions[k] + offset[k]) == (enemyPlayerPiecePositions[l] + offset[l]) && curPlayerPiecePositions[k] != -1 && enemyPlayerPiecePositions[l] != -1){
-              Piece[l].resetPiecePosition(l); // Liegt eine gegnerische Figur auf dem Platz erfolgt ein Figurpositionsreset auf Position "-1"
+              //Piece[l].resetPiecePosition(l); // Liegt eine gegnerische Figur auf dem Platz erfolgt ein Figurpositionsreset auf Position "-1"
               return; // Interrupt, damit keine weiteren Figurpositionen resettet werden
-            }
+            }*/
           }
         }
       }
@@ -294,7 +302,7 @@ public class mainGame {
       // ##### Zielausgabe fehlt! #####
     }
     
-    gamefield.setPlayerPosition(curPlayer + 1, curPiecePosition);  // Update Spielfeld
+    gamefield.setPlayerPosition(curPlayer + 1, curPiecePosition);  // Update Spielfeld, übergabe der Figurpositionen einschließlich Offsets!
   }
 
   // Methode zur Bereinigung der Console
