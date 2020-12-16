@@ -34,6 +34,7 @@ public class mainGame {
     boolean   gameRoutineStart = false;                       // Spielroutine, initialer Start
     int       cntDice;                                        // Würfelzahl
     boolean   InputCheck;                                     // Prüfen der Spielereingabe
+    boolean   PositionCheck = false;                          // Prüfen des Würfelergebnisses bezogen auf die Figurpositionen
     boolean[] InitRollDice = {true, true, true, true};        // Initiales Würfeln (3 Versuche wenn keine Spieler im Feld)
     int       curPiece;
 
@@ -78,12 +79,14 @@ public class mainGame {
       System.out.println("\nSpieler '" + curPlayerName + "' ist am Zug!");
 
       // Hier fehlt die Abfrage, ob alle Figuren in der Basis sind, damit 3 Mal gewürfelt werden kann.
-      InitRollDice[curPlayer] = CheckBase(Piece[curPlayer], InitRollDice[curPlayer]);
-      //cntDice = RollDice(Player[curPlayer], InitRollDice[curPlayer]);
-      cntDice = 6;  // ##### TEST #####
+      InitRollDice[curPlayer] = CheckBase(Piece[curPlayer], InitRollDice[curPlayer], Player[curPlayer]);
+      cntDice                 = RollDice(Player[curPlayer], InitRollDice[curPlayer]);
+      //cntDice = 6;  // ##### TEST #####
 
-      if (cntDice != 0) {
-        //outPiecePositions(Player[curPlayer], Piece[curPlayer]); // Brauchen wir theoretisch nicht mehr
+      PositionCheck = checkPiecePosition(Piece[curPlayer], cntDice, Player[curPlayer]);
+
+      if (cntDice != 0 && PositionCheck == true) {
+        PositionCheck = false;
         System.out.println("Wählen Sie eine Figur.");
         
         do { // Prüfen ob eine korrekte Eingabe erfolgt ist
@@ -182,8 +185,8 @@ public class mainGame {
   }
 
   // Prüfen ob eigene Basis voll ist
-  public static boolean CheckBase(Piece Piece, boolean InitRollDice){
-    int[] curPlayerPieces = Piece.getPiecePositions();
+  public static boolean CheckBase(Piece Piece, boolean InitRollDice, Player Player){
+    int[] curPlayerPieces = Piece.getPiecePositions(Player.getOffset());
 
     for (int i = 0; i <= 3; i++){
       if (curPlayerPieces[i] != -1) return false;
@@ -193,8 +196,7 @@ public class mainGame {
 
   // Ausgabe Figurpositionen
   public static void outPiecePositions(Player Player, Piece Piece){
-    int[]    cntPiece         = Piece.getPiecePositions();
-    int      offset           = Player.getOffset();
+    int[]    cntPiece         = Piece.getPiecePositions(Player.getOffset());
     String[] strPiecePosition = new String[4];
     
     System.out.println("Ihre Figuren befinden sich an nachfolgenden Positionen.");
@@ -250,22 +252,26 @@ public class mainGame {
     return false;
   }
 
+  // Würfelergebnis prüfen bezogen auf die Figurpositionen
+  public static boolean checkPiecePosition(Piece Piece, int cntDice, Player Player){
+
+    return false;
+  }
+
   // Aktualisierung der Figurposition
   public static void updatePiecePositions(int curPiece, Piece Piece, int cntDice, int curPlayer, Player Player){
-    int[] curPiecePositions = new int[4];
-    int   offset            = 0;
-  
-    curPiecePositions = Piece.getPiecePositions();
+    int[] curPiecePositions     = new int[4];
+    int   offset                = 0;
+
+    curPiecePositions = Piece.getPiecePositions();    // Absolutwert
     offset            = Player.getOffset();
 
-    // #### setPiecePosition abhängig ob Figur auf Position kleiner 39 vorrückt oder bereits auf 40.
-
-    Piece.setPiecePosition(curPiece, cntDice, Player.getOffset());
+    Piece.setPiecePosition(curPiece, cntDice);
   }
 
   // Prüfen ob gegnerische Figuren auf der aktualisierten Position sind.
   public static void checkEnemies(Piece[] Piece, int numOfPlayers, int curPlayer, Player[] Player){
-    int[] curPlayerPiecePositions   = Piece[curPlayer].getPiecePositions();
+    int[] curPlayerPiecePositions   = Piece[curPlayer].getPiecePositions(Player[curPlayer].getOffset());
     int[] enemyPlayerPiecePositions = new int[4];
     int[] offset                    = new int[numOfPlayers];
 
@@ -291,7 +297,7 @@ public class mainGame {
 
   // Aktualisieren des Spielfeldes
   public static void updatePieceGamefield(int curPlayer, int curPiece, Piece Piece, Player Player, Gamefield gamefield){
-    int[] curPiecePosition = Piece.getPiecePositions();
+    int[] curPiecePosition = Piece.getPiecePositions(Player.getOffset());;
     int   curPlayerOffset  = Player.getOffset();
 
     

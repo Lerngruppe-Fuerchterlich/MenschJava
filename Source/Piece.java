@@ -38,13 +38,43 @@ public class Piece {
     }
   }
 
+  public void setPiecePosition(int numPiece, int cntDice){
+    // Variablen
+    int CurPosition;
+
+    CurPosition = cntPiece[numPiece];
+    if (CurPosition == -1){
+      cntPiece[numPiece] = 0;                // Aus dem Haus raus -> auf Start Position
+    }
+    else{
+      cntPiece[numPiece] = CurPosition + cntDice; // Sonst -> Augenzahl gehen
+    }
+  }
+
   public void resetPiecePosition(int numPiece){
     int resetPosition = -1;
 
     cntPiece[numPiece] = resetPosition;
   }
-
+  // Absolute Positionsausgabe
   public int[] getPiecePositions(){
     return cntPiece;
+  }
+  // Relative Positionsausgabe
+  public int[] getPiecePositions(int offset){
+    int[] CurPosition = new int[4];
+
+    
+    for(int i = 0; i < 4; i++){
+      CurPosition[i] = cntPiece[i];
+      if(CurPosition[i] != -1 && CurPosition[i] < 40){
+        CurPosition[i] = cntPiece[i] + offset;
+        if(CurPosition[i] > 39){
+          CurPosition[i] = CurPosition[i] - 40;
+        }
+      }
+    }
+
+    return CurPosition;
   }
 }
