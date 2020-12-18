@@ -78,12 +78,13 @@ public class mainGame {
       curPlayerName = Player[curPlayer].getPlayerName();
       System.out.println("\nSpieler '" + curPlayerName + "' ist am Zug!");
 
-      // Hier fehlt die Abfrage, ob alle Figuren in der Basis sind, damit 3 Mal gewürfelt werden kann.
+      // Abfrage, ob alle Spieler in der Basis sind, damit 3 mal gewürfelt werden kann.
       InitRollDice[curPlayer] = CheckBase(Piece[curPlayer], InitRollDice[curPlayer], Player[curPlayer]);
       cntDice                 = RollDice(Player[curPlayer], InitRollDice[curPlayer]);
-      //cntDice = 6;  // ##### TEST #####
+      cntDice = 6;  // ##### TEST #####
 
-      PositionCheck = checkPiecePosition(Piece[curPlayer], cntDice, Player[curPlayer]);
+      // Prüfen des Würfelergebnisses
+      PositionCheck = checkPiecePosition(Piece[curPlayer], cntDice);
 
       if (cntDice != 0 && PositionCheck == true) {
         PositionCheck = false;
@@ -105,15 +106,13 @@ public class mainGame {
         
         updatePiecePositions(curPiece, Piece[curPlayer], cntDice, curPlayer, Player[curPlayer]);    // Aktualisieren der Spielerposition
 
-        //checkEnemies(Piece, numOfPlayers, curPlayer, Player);   // Prüfen ob gegnerische Figuren auf der aktualisierten Position sind
+        checkEnemies(Piece, numOfPlayers, curPlayer, Player);   // Prüfen ob gegnerische Figuren auf der aktualisierten Position sind
 
         updatePieceGamefield(curPlayer, curPiece, Piece[curPlayer], Player[curPlayer], gamefield); // calc with offset
         
         clrTerminal();
 
         gamefield.show();
-
-
       }
     }while (gameFinished != true);
     // Spielroutine ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -217,12 +216,11 @@ public class mainGame {
   // Prüfen ob Figur bewegt werden kann
   public static boolean checkPiecePosition(int numPiece, Piece Piece, int cntDice, Player Player){
     int[] curPiecePosition  = Piece.getPiecePositions();
-    int   offset            = Player.getOffset();
 
     if(curPiecePosition[numPiece] == -1 && cntDice == 6){
       // Abfrage, ob sich auf dem Startfeld bereits eine Figur befindet
       for(int i = 0; i < 4; i++){
-        if (curPiecePosition[i] == offset){
+        if ((curPiecePosition[i] == 0) && (i != numPiece)){
           System.out.println("Sie können keine Neue Figur auf das Feld holen. Sie haben bereits dort eine Figur platziert.");
           return false;
         }
@@ -231,11 +229,11 @@ public class mainGame {
     }
 
     // Prüfen ob Figur die Anzahl der gewürfelten Felder gehen kann
-    if(curPiecePosition[numPiece] + cntDice - offset > 43){  // Prüfen, ob gewählte Figur genug freie Schrittplätze besitzt
+    if((curPiecePosition[numPiece] + cntDice > 43) && (curPiecePosition[numPiece] != -1)){  // Prüfen, ob gewählte Figur genug freie Schrittplätze besitzt
       System.out.println("Ihre Figur kann nicht auf die Position bewegt werden. Bitte wählen Sie eine andere Figur.");
       return false;
     }
-    else if(curPiecePosition[numPiece] + cntDice - offset <= 43){  // Prüfen, ob die gewählte Position bereits von einer anderen eigenen Figur belegt ist
+    else if((curPiecePosition[numPiece] + cntDice < 44) && (curPiecePosition[numPiece] != -1)){  // Prüfen, ob die gewählte Position bereits von einer anderen eigenen Figur belegt ist
       for(int i = 0; i <= 3; i++){
         if(i != numPiece){
           if(curPiecePosition[i] == (curPiecePosition[numPiece] + cntDice)){
@@ -253,7 +251,56 @@ public class mainGame {
   }
 
   // Würfelergebnis prüfen bezogen auf die Figurpositionen
-  public static boolean checkPiecePosition(Piece Piece, int cntDice, Player Player){
+  public static boolean checkPiecePosition(Piece Piece, int cntDice){
+    int[]   PiecePositions    = Piece.getPiecePositions();
+    boolean allPiecesInBase   = false;
+    boolean[] PieceCanMove   = {false, false, false, false};
+
+
+    // Prüfen ob alle Figuren in der Basis sind
+    if(PiecePositions[0] == -1 && PiecePositions[1] == -1 && PiecePositions[2] == -1 && PiecePositions[3] == -1){
+      allPiecesInBase = true;
+    }
+    
+    // Es wurde keine 6 gewürfelt und alle Figuren sind in der Basis
+    if(cntDice != 6 && allPiecesInBase == true){
+      return false;
+    }
+
+    // Prüfen ob Figur an und für sich sich theoretisch bewegen könnte ohne Bezug zu den anderen Figuren
+    for(int i = 0; i < 4; i++){
+      if((PiecePositions[i] + cntDice < 44) && (PiecePositions[i] != -1)){
+          PieceCanMove[i] = true;
+      }
+      else if ((PiecePositions[i] == -1) && (cntDice == 6)){
+        PieceCanMove[i] = true;
+      }
+    }
+    
+    // Prüfen ob sich eine andere Figur auf der möglichen Position befindet auf die man gehen kann
+    for(int i = 0; i < 4; i++){
+      if(PieceCanMove[i] == true){
+        if(PiecePositions[i] == -1){          // Figur befindet sich in Basis, aber auf Position 0 ist bereits eine Figur
+          for(int j = 0; j < 4; j++){
+            if(PiecePositions[j] == 0){
+              PieceCanMove[i] = false;
+            }
+          }
+        }
+        else if(PiecePositions[i] != -1){     // Figur ist nicht in der Basis aber auf dem Ziel des möglichen Zuges befindet sich bereits eine eigene Figur
+          for(int j = 0; j < 4; j++){
+            if(((PiecePositions[i] + cntDice) == PiecePositions[j]) && i != j){
+              PieceCanMove[i] = false;
+            }
+          }
+        }
+      }
+    }
+
+    // Abfrage, ob eine Figur die Möglichkeit hat zu gehen
+    if(PieceCanMove[0] == true || PieceCanMove[1] == true || PieceCanMove[2] == true || PieceCanMove[3] == true){
+      return true;
+    }
 
     return false;
   }
@@ -279,16 +326,15 @@ public class mainGame {
       offset[i] = Player[i].getOffset();
     }
 
-    // BENÖTIGT UPDATE DA SPIELÜBERLAUF Position > 39 NICHT BERÜCKSICHTIGT!
     for (int i = 0; i < numOfPlayers; i++){ // Routine zum Durchlauf aller Figuren
       if(i != curPlayer){
-        //enemyPlayerPiecePositions = Piece[i].getPiecePositions(); //  Überschreiben der gegnerischen Position
+        enemyPlayerPiecePositions = Piece[i].getPiecePositions(); //  Überschreiben der gegnerischen Position
         for (int k = 0; k < 4; k++){
-          for(int l = 0; l < 4; l++){/*
+          for(int l = 0; l < 4; l++){
             if((curPlayerPiecePositions[k] + offset[k]) == (enemyPlayerPiecePositions[l] + offset[l]) && curPlayerPiecePositions[k] != -1 && enemyPlayerPiecePositions[l] != -1){
-              //Piece[l].resetPiecePosition(l); // Liegt eine gegnerische Figur auf dem Platz erfolgt ein Figurpositionsreset auf Position "-1"
+              Piece[l].resetPiecePosition(l); // Liegt eine gegnerische Figur auf dem Platz erfolgt ein Figurpositionsreset auf Position "-1"
               return; // Interrupt, damit keine weiteren Figurpositionen resettet werden
-            }*/
+            }
           }
         }
       }
